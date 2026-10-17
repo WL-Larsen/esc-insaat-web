@@ -11,6 +11,9 @@ dist/
 .env.*
 !.env.example
 
+# Geçici test çıktıları ve araç dosyaları (ekran görüntüleri, tarayıcı profilleri)
+.tmp/
+
 # Loglar
 npm-debug.log*
 

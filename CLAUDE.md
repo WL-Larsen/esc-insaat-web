@@ -27,6 +27,9 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - `src/config/` — `content.ts` (kategori, durum, ikon listeleri), `navigation.ts` (menü)
 - `src/i18n/` — arayüz metinleri (`tr.ts`)
 - `src/styles/global.css` — marka tokenları (renk, font, radius)
+- `scripts/process-logo.cjs` — logo değişince: `node scripts/process-logo.cjs "<logo.png>"`
+- `.tmp/` — geçici test dosyaları, ekran görüntüleri, tarayıcı profilleri (Git'e girmez).
+  `.tmp/panel-test.mjs`: panelin uçtan uca testi (`npm run dev` açıkken `node .tmp/panel-test.mjs`)
 - `keystatic.config.ts` — panel şeması (yalnızca `astro dev` sırasında yüklenir)
 - `src/content.config.ts` — içerik koleksiyonları ve doğrulama şeması
 
@@ -72,3 +75,6 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - Commit mesajları Türkçe ve kısa: `aşama-N: <ne yapıldı>`.
 - **GitHub'da depo oluşturma, push ve deployment işlemlerinden önce onay al.**
 - `.env` ve gizli anahtarlar asla commit edilmez.
+- **Tüm dosya işlemleri D: sürücüsünde:** geçici dosyalar `D:\ESC Insaat\.tmp`, npm önbelleği
+  `D:\npm-cache`. C:'ye kurulum/önbellek yazmadan önce sor. Başlıksız tarayıcı işlemlerini
+  test sonunda mutlaka kapat.
