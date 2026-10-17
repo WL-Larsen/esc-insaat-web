@@ -8,12 +8,14 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - Astro (statik site) + TypeScript
 - Tailwind CSS (v4, Vite eklentisi)
 - Keystatic (dosya tabanlı yönetim paneli; şu an `local` modu)
-- Node.js 22, npm
+- Node.js 24 LTS (Astro 7 için ≥ 22.22 gerekli), npm
+- Yol takma adı: `@/` → `src/`
 - Barındırma (ileride, doğrulanacak): Cloudflare Pages
 
 ## Komutlar
 - `npm run dev` → site: http://localhost:4321, panel: http://localhost:4321/keystatic
-- `npm run build` → üretim derlemesi (`dist/`)
+- `npm run build` → tip kontrolü (`astro check`) + üretim derlemesi (`dist/`)
+- `npm run check` → yalnızca tip kontrolü
 - `npm run preview` → derlenmiş siteyi yerelde önizleme
 
 ## Klasör yapısı

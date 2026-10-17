@@ -1,0 +1,89 @@
+---
+import Logo from './Logo.astro';
+import { navigation, isActive } from '@/config/navigation';
+import { t } from '@/i18n/tr';
+
+const { pathname } = Astro.url;
+---
+
+<header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+    <Logo />
+
+    <nav aria-label={t.nav.main} class="hidden md:block">
+      <ul class="flex gap-8">
+        {navigation.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive(item.href, pathname) ? 'page' : undefined}
+              class="text-sm font-medium text-slate-600 hover:text-slate-900 aria-[current=page]:text-slate-900"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      class="-mr-2 inline-flex size-11 items-center justify-center rounded-md md:hidden"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      aria-label={t.nav.openMenu}
+      data-label-open={t.nav.openMenu}
+      data-label-close={t.nav.closeMenu}
+    >
+      <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path data-icon="open" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+        <path data-icon="close" class="hidden" stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" aria-label={t.nav.main} class="border-t border-slate-200 md:hidden" hidden>
+    <ul class="mx-auto max-w-6xl px-4 py-2">
+      {navigation.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            aria-current={isActive(item.href, pathname) ? 'page' : undefined}
+            class="block py-3 text-base font-medium text-slate-700 aria-[current=page]:text-slate-950"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const button = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (button && menu) {
+    const setOpen = (open: boolean) => {
+      menu.hidden = !open;
+      button.setAttribute('aria-expanded', String(open));
+      button.setAttribute('aria-label', (open ? button.dataset.labelClose : button.dataset.labelOpen) ?? '');
+      button.querySelector('[data-icon="open"]')?.classList.toggle('hidden', open);
+      button.querySelector('[data-icon="close"]')?.classList.toggle('hidden', !open);
+    };
+
+    const isOpen = () => button.getAttribute('aria-expanded') === 'true';
+
+    button.addEventListener('click', () => setOpen(!isOpen()));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        button.focus();
+      }
+    });
+    window.matchMedia('(min-width: 48rem)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>

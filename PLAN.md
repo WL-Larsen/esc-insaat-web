@@ -76,12 +76,12 @@ kullanıcı onayıyla geçilir.
 
 ### Faz A — Yerel geliştirme
 
-- [ ] **Aşama 0 — Depo hazırlığı**
+- [x] **Aşama 0 — Depo hazırlığı** (tamamlandı: 18.10.2026)
   - Yerel: `git init` (`main` dalı), `.gitignore`, CLAUDE.md, PLAN.md, ilk commit
   - GitHub: **private** `esc-insaat-web` deposu ve ilk push (**ayrı onayla**)
   - ✅ Kontrol: `git log` ilk commit'i gösterir; depo GitHub'da "Private" etiketli.
 
-- [ ] **Aşama 1 — Proje iskeleti**
+- [x] **Aşama 1 — Proje iskeleti** (tamamlandı: 18.10.2026; Astro 7.4, Tailwind 4.3, Node 24)
   - Astro + TypeScript kurulumu, Tailwind entegrasyonu
   - Temel layout: header (mobil hamburger menü), footer
   - 5 sayfa + 404 için boş şablonlar, Türkçe URL'ler

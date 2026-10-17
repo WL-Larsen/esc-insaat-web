@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Marka tokenları Aşama 2'de burada tanımlanacak. */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
