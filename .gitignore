@@ -1,0 +1,20 @@
+# Bağımlılıklar
+node_modules/
+
+# Derleme çıktıları
+dist/
+.astro/
+.wrangler/
+
+# Ortam değişkenleri ve gizli anahtarlar
+.env
+.env.*
+!.env.example
+
+# Loglar
+npm-debug.log*
+
+# İşletim sistemi / editör
+.DS_Store
+Thumbs.db
+.idea/
