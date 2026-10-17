@@ -21,9 +21,9 @@ const [home, services, projects] = await Promise.all([getHomeContent(), getServi
       aria-hidden="true"
     >
     </div>
-    <Container class="relative py-20 md:py-32">
+    <Container class="relative py-20 md:py-32 2xl:py-40">
       <p class="text-sm font-semibold uppercase tracking-wider text-brand-200">{home.hero.eyebrow}</p>
-      <h1 class="mt-4 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
+      <h1 class="mt-4 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white text-balance sm:text-5xl md:text-6xl 2xl:max-w-4xl 2xl:text-7xl">
         {home.hero.title}
       </h1>
       <p class="mt-6 max-w-xl text-lg text-white/75">{home.hero.subtitle}</p>

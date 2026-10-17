@@ -30,6 +30,30 @@
   --color-line: #e2e7ee;
 
   --radius-card: 0.75rem;
+
+  /* Çok büyük ekranlar (1920px+) */
+  --breakpoint-3xl: 120rem;
+}
+
+/* Site genişliği — tüm bölümler ve header bu ölçüyü kullanır. */
+@utility site-container {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 90rem;
+  padding-inline: 1rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 96rem) {
+    padding-inline: 3rem;
+  }
+  @media (width >= 120rem) {
+    max-width: 112rem;
+  }
 }
 
 /* Koyu zeminlerde kullanılan ince ızgara deseni */
@@ -44,6 +68,18 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+}
+
+/* Büyük ekranlarda tüm ölçüler (rem) orantılı büyür */
+@media (width >= 120rem) {
+  html {
+    font-size: 106.25%;
+  }
+}
+@media (width >= 160rem) {
+  html {
+    font-size: 118.75%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -8,7 +8,7 @@ const { pathname } = Astro.url;
 ---
 
 <header class="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
-  <div class="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 sm:px-6">
+  <div class="site-container flex h-18 items-center justify-between">
     <Logo />
 
     <nav aria-label={t.nav.main} class="hidden lg:block">
@@ -49,7 +49,7 @@ const { pathname } = Astro.url;
   </div>
 
   <nav id="mobile-menu" aria-label={t.nav.main} class="border-t border-line bg-white lg:hidden" hidden>
-    <ul class="mx-auto max-w-6xl px-4 py-3 sm:px-6">
+    <ul class="site-container py-3">
       {navigation.map((item) => (
         <li>
           <a
