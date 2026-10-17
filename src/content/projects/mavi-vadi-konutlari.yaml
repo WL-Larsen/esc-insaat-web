@@ -2,17 +2,17 @@ title: Mavi Vadi Konutları
 status: ongoing
 category: residential
 location: Örnek İlçe, İstanbul
-year: 2026
+year: '2026'
 summary: Yeşil alanlarla çevrili, 3 blok ve 96 daireden oluşan modern konut projesi.
 description: |
   Mavi Vadi Konutları, aileler için tasarlanmış geniş peyzaj alanları, çocuk oyun alanları ve kapalı otoparkıyla öne çıkan bir konut projesidir.
 
   Projede 2+1, 3+1 ve 4+1 daire seçenekleri bulunmaktadır. Kaba inşaat tamamlanmış olup ince işler devam etmektedir.
-coverImage: ../../assets/placeholders/placeholder-1.svg
+coverImage: ../../assets/projects/mavi-vadi-konutlari/coverImage.svg
 gallery:
-  - ../../assets/placeholders/placeholder-2.svg
-  - ../../assets/placeholders/placeholder-3.svg
-  - ../../assets/placeholders/placeholder-4.svg
+  - ../../assets/projects/mavi-vadi-konutlari/gallery-1.svg
+  - ../../assets/projects/mavi-vadi-konutlari/gallery-2.svg
+  - ../../assets/projects/mavi-vadi-konutlari/gallery-3.svg
 features:
   - 3 blok, 96 daire
   - 2+1, 3+1 ve 4+1 seçenekler

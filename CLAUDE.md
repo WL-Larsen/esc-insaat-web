@@ -27,8 +27,16 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - `src/config/` — `content.ts` (kategori, durum, ikon listeleri), `navigation.ts` (menü)
 - `src/i18n/` — arayüz metinleri (`tr.ts`)
 - `src/styles/global.css` — marka tokenları (renk, font, radius)
-- `keystatic.config.ts` — panel şeması
+- `keystatic.config.ts` — panel şeması (yalnızca `astro dev` sırasında yüklenir)
 - `src/content.config.ts` — içerik koleksiyonları ve doğrulama şeması
+
+## Panel ↔ şema uyumu
+- `keystatic.config.ts` ve `src/content.config.ts` alanları birebir eşleşmeli; birini
+  değiştirirken diğerini de güncelle.
+- Proje görselleri `src/assets/projects/<slug>/` altında; YAML'da
+  `../../assets/projects/<slug>/<dosya>` olarak tutulur (Keystatic bu öneki bekler).
+- Panel boş alanları `null` yazabilir veya tamamen silebilir → isteğe bağlı metinler
+  `optionalText` ile tanımlanır. Yıl alanı panelde metindir, şemada sayıya çevrilir.
 
 ## Mimari kurallar
 1. **Sayfalar ve bileşenler içeriği yalnızca `src/lib/data/` fonksiyonlarıyla alır**

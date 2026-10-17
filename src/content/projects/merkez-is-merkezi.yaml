@@ -2,13 +2,13 @@ title: Merkez İş Merkezi
 status: completed
 category: commercial
 location: Örnek İlçe, Ankara
-year: 2020
+year: '2020'
 summary: Ofis ve mağaza alanlarından oluşan 7 katlı ticari yapı.
 description: |
   Merkez İş Merkezi, şehir merkezine yakın konumda ofis ve mağaza alanlarını bir arada sunan ticari bir yapıdır.
-coverImage: ../../assets/placeholders/placeholder-2.svg
+coverImage: ../../assets/projects/merkez-is-merkezi/coverImage.svg
 gallery:
-  - ../../assets/placeholders/placeholder-6.svg
+  - ../../assets/projects/merkez-is-merkezi/gallery-1.svg
 features:
   - 7 kat, 32 ofis
   - Zemin katta 6 mağaza

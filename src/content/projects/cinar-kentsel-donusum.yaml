@@ -2,16 +2,16 @@ title: Çınar Apartmanı Kentsel Dönüşüm
 status: completed
 category: residential
 location: Örnek İlçe, İstanbul
-year: 2023
+year: '2023'
 summary: Riskli yapının yerine depreme dayanıklı, 16 daireli modern bir bina inşa edildi.
 description: |
   Hak sahipleriyle yapılan şeffaf sözleşme sürecinin ardından riskli bina yıkılarak yerine yönetmeliklere uygun, modern bir apartman inşa edildi.
 
   Proje süresince hak sahipleri her aşamada bilgilendirildi ve teslim planlanan tarihte gerçekleştirildi.
-coverImage: ../../assets/placeholders/placeholder-8.svg
+coverImage: ../../assets/projects/cinar-kentsel-donusum/coverImage.svg
 gallery:
-  - ../../assets/placeholders/placeholder-1.svg
-  - ../../assets/placeholders/placeholder-3.svg
+  - ../../assets/projects/cinar-kentsel-donusum/gallery-1.svg
+  - ../../assets/projects/cinar-kentsel-donusum/gallery-2.svg
 features:
   - 16 daire, 2 dükkân
   - Depreme dayanıklı betonarme

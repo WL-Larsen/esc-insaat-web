@@ -2,16 +2,16 @@ title: Lale Evleri
 status: completed
 category: residential
 location: Örnek İlçe, Kocaeli
-year: 2022
+year: '2022'
 summary: 48 daireli, sosyal donatılı ve enerji verimli butik konut projesi.
 description: |
   Lale Evleri, sakin bir yerleşim bölgesinde yer alan, enerji verimli cephe sistemi ve ortak sosyal alanlarıyla tamamlanmış bir konut projesidir.
 
   Proje planlanan tarihte teslim edilmiş ve tüm daireler sahiplerine ulaşmıştır.
-coverImage: ../../assets/placeholders/placeholder-5.svg
+coverImage: ../../assets/projects/lale-evleri/coverImage.svg
 gallery:
-  - ../../assets/placeholders/placeholder-6.svg
-  - ../../assets/placeholders/placeholder-7.svg
+  - ../../assets/projects/lale-evleri/gallery-1.svg
+  - ../../assets/projects/lale-evleri/gallery-2.svg
 features:
   - 2 blok, 48 daire
   - Isı yalıtımlı cephe

@@ -2,13 +2,13 @@ title: Yeşil Tepe Villa Arsaları
 status: ongoing
 category: land
 location: Örnek İlçe, Sakarya
-year: 2026
+year: '2026'
 summary: Altyapısı hazırlanan, imarlı villa arsalarından oluşan arsa geliştirme projesi.
 description: |
   Yeşil Tepe, doğayla iç içe bir bölgede imar ve altyapı çalışmaları süren villa arsalarından oluşmaktadır.
 
   Yol, elektrik ve su altyapısı çalışmaları devam etmektedir.
-coverImage: ../../assets/placeholders/placeholder-4.svg
+coverImage: ../../assets/projects/yesil-tepe-arsalari/coverImage.svg
 gallery: []
 features:
   - 24 parsel

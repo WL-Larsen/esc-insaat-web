@@ -11,7 +11,7 @@ const projects = defineCollection({
       status: z.enum(PROJECT_STATUSES),
       category: z.enum(PROJECT_CATEGORIES),
       location: z.string().min(1),
-      year: z.number().int(),
+      year: z.coerce.number().int().min(1900).max(2099),
       summary: z.string().min(1),
       description: z.string().default(''),
       coverImage: image(),
@@ -34,6 +34,12 @@ const services = defineCollection({
   }),
 });
 
+// Panel boş alanları null olarak kaydedebilir; sayfalar her zaman string alır.
+const optionalText = z
+  .string()
+  .nullish()
+  .transform((v) => v ?? '');
+
 const iconItem = z.object({ title: z.string(), text: z.string(), icon: z.enum(ICON_NAMES) });
 const textItem = z.object({ title: z.string(), text: z.string() });
 
@@ -43,16 +49,16 @@ const settings = defineCollection({
     companyName: z.string(),
     tagline: z.string(),
     email: z.email(),
-    phone: z.string().default(''),
-    address: z.string().default(''),
-    workingHours: z.string().default(''),
+    phone: optionalText,
+    address: optionalText,
+    workingHours: optionalText,
     social: z
       .object({
-        instagram: z.string().default(''),
-        facebook: z.string().default(''),
-        linkedin: z.string().default(''),
-        youtube: z.string().default(''),
-        x: z.string().default(''),
+        instagram: optionalText,
+        facebook: optionalText,
+        linkedin: optionalText,
+        youtube: optionalText,
+        x: optionalText,
       })
       .default({ instagram: '', facebook: '', linkedin: '', youtube: '', x: '' }),
   }),

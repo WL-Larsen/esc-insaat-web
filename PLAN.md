@@ -107,10 +107,12 @@ kullanıcı onayıyla geçilir.
   - ✅ Kontrol: Projeler sayfası örnek projeleri listeler; hatalı içerikte derleme
     anlaşılır bir hata verir.
 
-- [ ] **Aşama 4 — Yönetim paneli (Keystatic, yerel mod)**
-  - Panel şeması (projeler, hizmetler, tekil sayfalar); varsayılan sade arayüz
-  - Görsel yükleme → `src/assets/` altına
-  - Panel yalnızca geliştirme ortamında aktif; üretim derlemesine girmez
+- [x] **Aşama 4 — Yönetim paneli (Keystatic, yerel mod)** (tamamlandı: 18.10.2026)
+  - Panel şeması (projeler, hizmetler, ana sayfa, hakkımızda, site ayarları)
+  - Görsel yükleme → `src/assets/projects/<proje>/` (proje silinince görseller de silinir)
+  - Panel yalnızca `npm run dev` ile aktif; üretim derlemesine panel ve React girmez
+  - Otomatik tarayıcı testiyle doğrulandı: ekle (fotoğraflı) → düzenle → sil, site ayarı kaydet
+  - Not: Keystatic arayüzü İngilizce (Save, Add, Choose file…); alan adları Türkçe
   - ✅ Kontrol: Panelden proje ekle, fotoğraf yükle, düzenle, sil → değişiklik
     sitede görünür.
 
