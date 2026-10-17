@@ -1,9 +1,11 @@
 hero:
   eyebrow: Konut · Arsa · Tadilat
   title: Güvenle yükselen yaşam alanları inşa ediyoruz
-  subtitle: Planlamadan teslimata kadar her aşamada şeffaf, kaliteli ve zamanında teslim odaklı çalışıyoruz.
+  subtitle: >-
+    Planlamadan teslimata kadar her aşamada şeffaf, kaliteli ve zamanında teslim
+    odaklı çalışıyoruz.
 stats:
-  - value: 15+
+  - value: 20+
     label: Yıllık deneyim
   - value: 40+
     label: Tamamlanan proje
@@ -13,16 +15,24 @@ stats:
     label: Devam eden proje
 whyUs:
   - title: Zamanında teslim
-    text: Her projeye gerçekçi bir iş programıyla başlar, süreci düzenli raporlarla paylaşırız.
+    text: >-
+      Her projeye gerçekçi bir iş programıyla başlar, süreci düzenli raporlarla
+      paylaşırız.
     icon: clock
   - title: Kaliteli malzeme
-    text: Standartlara uygun, uzun ömürlü malzemeler ve denetimli işçilikle çalışırız.
+    text: >-
+      Standartlara uygun, uzun ömürlü malzemeler ve denetimli işçilikle
+      çalışırız.
     icon: shield
   - title: Şeffaf süreç
-    text: Sözleşmeden teslime kadar tüm adımları açık ve anlaşılır biçimde yürütürüz.
+    text: >-
+      Sözleşmeden teslime kadar tüm adımları açık ve anlaşılır biçimde
+      yürütürüz.
     icon: check
   - title: Satış sonrası destek
-    text: Teslimden sonra da yanınızdayız; garanti kapsamındaki talepleri hızla çözeriz.
+    text: >-
+      Teslimden sonra da yanınızdayız; garanti kapsamındaki talepleri hızla
+      çözeriz.
     icon: handshake
 process:
   - title: Tanışma ve ihtiyaç analizi
@@ -30,9 +40,15 @@ process:
   - title: Proje ve planlama
     text: Mimari ve teknik projeyi hazırlar, gerekli izin süreçlerini yönetiriz.
   - title: Uygulama
-    text: Deneyimli ekibimizle inşaatı yürütür, ilerlemeyi düzenli olarak paylaşırız.
+    text: >-
+      Deneyimli ekibimizle inşaatı yürütür, ilerlemeyi düzenli olarak
+      paylaşırız.
   - title: Teslim ve destek
-    text: Kontrolleri tamamlayıp teslim eder, sonrasında da destek vermeye devam ederiz.
+    text: >-
+      Kontrolleri tamamlayıp teslim eder, sonrasında da destek vermeye devam
+      ederiz.
 cta:
   title: Projeniz için bizimle iletişime geçin
-  text: Konut, arsa veya tadilat ihtiyacınızı paylaşın; size en kısa sürede dönüş yapalım.
+  text: >-
+    Konut, arsa veya tadilat ihtiyacınızı paylaşın; size en kısa sürede dönüş
+    yapalım.
