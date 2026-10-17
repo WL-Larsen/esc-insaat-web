@@ -74,6 +74,9 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
   nasıl test edeceğini kısaca açıkla. Tamamlanan aşamanın kutucuğunu işaretle.
 - Commit mesajları Türkçe ve kısa: `aşama-N: <ne yapıldı>`.
 - **GitHub'da depo oluşturma, push ve deployment işlemlerinden önce onay al.**
+- **Maliyet kuralı: her şey ücretsiz olmalı.** Ücretli plan, abonelik, kredi kartı/ödeme
+  yöntemi isteyen ya da ücretsiz kotası aşılınca ücretlenen bir servisi önermeden/kullanmadan
+  önce açıkça belirt ve onay al; her zaman ücretsiz alternatifi de sun. Bkz. PLAN.md §5.
 - `.env` ve gizli anahtarlar asla commit edilmez.
 - **Tüm dosya işlemleri D: sürücüsünde:** geçici dosyalar `D:\ESC Insaat\.tmp`, npm önbelleği
   `D:\npm-cache`. C:'ye kurulum/önbellek yazmadan önce sor. Başlıksız tarayıcı işlemlerini

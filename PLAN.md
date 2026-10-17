@@ -144,28 +144,35 @@ kullanıcı onayıyla geçilir.
   - Başarı ölçütleri: giriş çalışır, kayıt GitHub'a commit düşer, site 1–2 dakikada
     güncellenir, yetkisiz hesap panele giremez.
   - Başarısızsa değerlendirilecek alternatifler: Keystatic'in farklı barındırma
-    sağlayıcısında (Netlify / Vercel) çalıştırılması, Keystatic Cloud, panelin
-    yalnızca yerelde kullanılması (içerik yerelde düzenlenip push edilir).
+    sağlayıcısında (Netlify / Vercel, ücretsiz planlar) çalıştırılması, panelin
+    yalnızca yerelde kullanılması (içerik yerelde düzenlenip push edilir),
+    Keystatic Cloud (⚠️ 3 kullanıcıya kadar ücretsiz, fazlası ücretli — onay gerekir).
   - ✅ Kontrol: Test sonuç raporu ve seçilen yöntem için kullanıcı onayı.
 
 - [ ] **Aşama 8 — Deployment**
   - GitHub deposunu barındırmaya bağlama; `main` → otomatik yayın
   - Keystatic GitHub modu (Aşama 7'de doğrulanan yöntemle)
-  - Ek güvenlik: `/keystatic` önüne Cloudflare Access (yalnızca sizin e-postanız)
+  - Ek güvenlik: `/keystatic` önüne Cloudflare Access (yalnızca sizin e-postanız;
+    ücretsiz plan 50 kullanıcı — ⚠️ kayıtta ödeme yöntemi istenirse onay alınır,
+    istenmezse veya reddedilirse yalnızca GitHub girişiyle devam edilir)
   - Gizli anahtarlar barındırma ortam değişkenlerinde
   - ✅ Kontrol: Geçici adreste site açılır; panel değişikliği yayına girer; başka
     hesapla panele girilemez.
 
 - [ ] **Aşama 9 — Domain ve HTTPS**
-  - Domain seçimi ve satın alma (.com.tr / .com)
+  - Domain seçimi ve satın alma (.com.tr / .com) — ⚠️ **projedeki tek kaçınılmaz ücret**
+    (yıllık); satın alma öncesi fiyat karşılaştırması ve onay. Domain alınmazsa site
+    ücretsiz `*.pages.dev` adresinde yayında kalabilir
   - DNS yönetimi (Cloudflare), özel domain bağlama
   - HTTPS (otomatik sertifika), `www` ↔ kök yönlendirme, HTTP → HTTPS zorunluluğu
-  - Kurumsal e-posta: Cloudflare Email Routing (info@ → kişisel adres) veya
-    ücretli e-posta servisi
+  - Kurumsal e-posta: Cloudflare Email Routing (ücretsiz; info@ → kişisel adrese
+    yönlendirme). info@ adresinden e-posta *gönderme* gerekirse ücretsiz seçenekler
+    önce denenir; ücretli e-posta servisi (⚠️) yalnızca onayla
   - ✅ Kontrol: `https://alanadi` açılır, sertifika geçerli, info@ e-postası ulaşır.
 
 - [ ] **Aşama 10 — İletişim kanalları**
-  - İletişim formu (sunucu fonksiyonu + e-posta servisi + Turnstile spam koruması)
+  - İletişim formu (Cloudflare fonksiyonu + Resend ücretsiz plan: ayda 3.000 / günde 100
+    e-posta + Turnstile spam koruması, ücretsiz)
   - WhatsApp butonu (değerlendirme sonrası)
   - ✅ Kontrol: Form gönderimi e-postaya ulaşır, bot gönderimleri engellenir.
 
@@ -191,3 +198,27 @@ kullanıcı onayıyla geçilir.
 - Çok sayıda yüksek çözünürlüklü fotoğraf depoyu büyütür; yükleme öncesi makul boyut
   önerilir, gerekirse harici görsel depolamaya geçilir.
 - Paket sürümleri kurulum anında güncel kararlı sürüm olarak sabitlenir.
+- **Fotoğraf boyutu:** panel orijinal dosyayı depoya yazar. Telefondan doğrudan yüklenen
+  4–6 MB'lık fotoğraflar depoyu hızla büyütür (GitHub ~1 GB önerir). Yükleme öncesi
+  küçültme (≈2000 px, ≈400 KB) ile ~200–300 proje veritabanı olmadan taşınabilir.
+
+## 5. Maliyet (kural: her şey ücretsiz; ⚠️ = onay gerektirir)
+Kontrol tarihi: 18.10.2026. Ücretsiz kotalar sağlayıcıya bağlıdır, kullanmadan önce yeniden doğrulanır.
+
+| Kalem | Durum | Not |
+|---|---|---|
+| Astro, Tailwind, Keystatic, React, TypeScript, sharp | ✅ Ücretsiz | Açık kaynak (MIT / Apache-2.0) |
+| Manrope font | ✅ Ücretsiz | OFL-1.1, ticari kullanım serbest |
+| Node.js, npm | ✅ Ücretsiz | |
+| GitHub private depo | ✅ Ücretsiz | GitHub Free; Actions/LFS kullanılmıyor |
+| Cloudflare Pages | ✅ Ücretsiz | 500 derleme/ay, 20.000 dosya, 20 dk derleme süresi |
+| Cloudflare DNS, SSL/HTTPS, Email Routing | ✅ Ücretsiz | |
+| Cloudflare Turnstile | ✅ Ücretsiz | Form spam koruması |
+| Resend (iletişim formu) | ✅ Ücretsiz plan | 3.000 e-posta/ay, 100/gün |
+| Cloudflare Access | ✅ Ücretsiz plan | 50 kullanıcı; ⚠️ ödeme yöntemi istenirse onay |
+| **Domain (.com.tr / .com)** | ⚠️ **Ücretli (yıllık)** | Tek kaçınılmaz ücret; alternatif: ücretsiz `*.pages.dev` |
+| Kurumsal e-posta gönderimi (info@'dan yazma) | ⚠️ Olası ücret | Yönlendirme ücretsiz; gönderme için ücretsiz yollar önce denenir |
+| Keystatic Cloud | ⚠️ 3 kullanıcıdan sonra ücretli | Yalnızca Aşama 7 başarısız olursa alternatif |
+| Cloudflare R2 (çok fotoğraf olursa) | ⚠️ 10 GB'a kadar ücretsiz | Kurulumda ödeme yöntemi isteyebilir; aşılırsa ücretli |
+| Veritabanı (Faz C, emlak ilanları) | ⚠️ Ücretsiz katmanlar var | Cloudflare D1 vb.; kota aşılırsa ücretli |
+| Cloudflare Images, ücretli temalar/eklentiler | ❌ Kullanılmayacak | |
