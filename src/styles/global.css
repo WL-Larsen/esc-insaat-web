@@ -1,7 +1,53 @@
 @import "tailwindcss";
+@import "@fontsource-variable/manrope";
 
-/* Marka tokenları Aşama 2'de burada tanımlanacak. */
+/*
+ * Marka tokenları — logo renklerinden türetildi.
+ * Renk değişikliği yalnızca bu blokta yapılır; bileşenlerde sabit renk kodu kullanılmaz.
+ */
+@theme {
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Logo mavileri */
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dbe8fe;
+  --color-brand-200: #b9d2fd;
+  --color-brand-400: #4d91fb;
+  --color-brand-500: #1e74fa; /* logo parlak mavi (dekoratif / büyük metin) */
+  --color-brand-600: #0b5bd6;
+  --color-brand-700: #0346ab; /* logo koyu mavi (buton, bağlantı) */
+  --color-brand-800: #063a88;
+
+  /* Koyu lacivert zeminler */
+  --color-navy-800: #12305e;
+  --color-navy-900: #0b1e3d;
+  --color-navy-950: #071328;
+
+  /* Metin ve yüzeyler */
+  --color-ink: #0b1e3d;
+  --color-muted: #55657d;
+  --color-surface: #f4f6f9;
+  --color-line: #e2e7ee;
+
+  --radius-card: 0.75rem;
+}
+
+/* Koyu zeminlerde kullanılan ince ızgara deseni */
+@utility pattern-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

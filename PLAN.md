@@ -9,8 +9,9 @@
 - Yönetim paneli (yalnızca yerel): proje ekle / düzenle / sil, fotoğraf yükle;
   hizmetler, hakkımızda, ana sayfa metinleri ve site ayarları (iletişim, sosyal medya)
 - Dil: yalnızca Türkçe (çok dile hazır yapı)
-- Geçici marka kimliği (koyu lacivert, bakır, açık gri; metin logo "ESC İnşaat")
-- Temsili görseller
+- Marka kimliği: firma logosu (kaynak: `D:\ESC insaat gorseller\logo.png`) ve logodan
+  türetilen mavi palet (koyu mavi, parlak mavi, lacivert, açık gri)
+- Temsili görseller ve örnek (kurgu) içerik — yayından önce gerçekleriyle değiştirilir
 
 ### Öncelikler
 1. Mobil deneyim (en önemli)
@@ -41,11 +42,14 @@ Arayüz metinleri `src/i18n/tr.ts` içinde. EN/RU eklenince `/en/...`, `/ru/...`
 Türkçe URL'ler değişmez.
 
 **Marka değişimine hazırlık:** Renk, font, radius `global.css` tokenlarında; logo
-yalnızca `Logo.astro` içinde. Gerçek logo/renkler gelince yalnızca bu iki yer değişir.
+dosyaları `src/assets/brand/`, kullanımı yalnızca `Logo.astro` içinde.
 
-**Kategori genişletme:** Kategoriler `src/config/categories.ts` içinde tek listede.
-Yeni kategori = listeye bir satır. İleride kategorilerin panelden yönetilmesi istenirse
-ayrı bir koleksiyona dönüştürülür.
+**Kategori genişletme:** Kategoriler `src/config/content.ts` içinde tek listede.
+Yeni kategori = listeye bir değer + `tr.ts` içine etiket. İleride kategorilerin panelden
+yönetilmesi istenirse ayrı bir koleksiyona dönüştürülür.
+
+**Uzun metinler:** Açıklamalar çok satırlı düz metin olarak tutulur (boş satır = yeni
+paragraf). Zengin metin (kalın, bağlantı, liste) ihtiyacı doğarsa Markdoc'a geçilir.
 
 ### İçerik modeli
 
@@ -59,16 +63,17 @@ ayrı bir koleksiyona dönüştürülür.
 | location | metin | il / ilçe |
 | year | sayı | tamamlanma veya başlangıç yılı |
 | summary | metin | kart açıklaması (kısa) |
-| description | zengin metin | detay sayfası |
+| description | çok satırlı metin | detay sayfası (paragraflar) |
 | coverImage | görsel | zorunlu |
 | gallery | görsel listesi | opsiyonel |
 | features | metin listesi | ör. "120 daire", "Kapalı otopark" |
 | featured | evet/hayır | ana sayfada göster |
 | isPlaceholder | evet/hayır | "Temsili görsel" etiketi |
 
-**Hizmet (`services`, koleksiyon):** title, slug, summary, description, icon, order
-**Tekil sayfalar (singleton):** `siteSettings` (firma adı, e-posta, telefon, adres,
-sosyal medya), `home` (hero metni, güven göstergeleri), `about` (hakkımızda, değerler)
+**Hizmet (`services`, koleksiyon):** title, slug, summary, description, icon, features, order
+**Tekil içerikler:** `settings/site` (firma adı, slogan, e-posta, telefon, adres, çalışma
+saatleri, sosyal medya), `pages/home` (hero, rakamlar, neden biz, süreç, CTA),
+`pages/about` (giriş, hikaye, vizyon, misyon, değerler, zaman çizelgesi)
 
 ## 3. Aşamalar
 Her aşama sonunda çalışan bir sonuç ve kontrol adımları vardır. Sonraki aşamaya
@@ -88,17 +93,17 @@ kullanıcı onayıyla geçilir.
   - ✅ Kontrol: `npm run dev` çalışır; tüm sayfalar arasında mobil ve masaüstünde
     gezinilir; menü telefonda açılıp kapanır.
 
-- [ ] **Aşama 2 — Geçici marka kimliği ve tasarım sistemi**
-  - Renk tokenları (lacivert / bakır / açık gri), tipografi (Kiril destekli,
-    self-hosted font), boşluk ve radius tokenları
-  - Metin tabanlı geçici logo (`Logo.astro`)
+- [x] **Aşama 2 — Marka kimliği ve tasarım sistemi** (tamamlandı: 18.10.2026)
+  - Logodan türetilen renk tokenları, Manrope (Kiril destekli, self-hosted),
+    radius tokenları
+  - Firma logosu (şeffaf zemin, beyaz versiyon, favicon) — `Logo.astro`
   - Temel bileşenler: Button, Container, SectionHeading, Card
   - Temsili görseller (nötr SVG, "Temsili görsel" etiketli)
   - ✅ Kontrol: Tek bir token değişince tüm sitenin rengi değişir.
 
-- [ ] **Aşama 3 — İçerik modeli ve veri katmanı**
+- [x] **Aşama 3 — İçerik modeli ve veri katmanı** (tamamlandı: 18.10.2026)
   - `src/config/` sabit listeleri, `content.config.ts` şemaları, `src/lib/data/`
-  - 3–4 temsili proje, 3 hizmet, site ayarları için örnek içerik
+  - 6 temsili proje, 4 hizmet, ana sayfa / hakkımızda / site ayarları örnek içeriği
   - ✅ Kontrol: Projeler sayfası örnek projeleri listeler; hatalı içerikte derleme
     anlaşılır bir hata verir.
 
@@ -109,7 +114,8 @@ kullanıcı onayıyla geçilir.
   - ✅ Kontrol: Panelden proje ekle, fotoğraf yükle, düzenle, sil → değişiklik
     sitede görünür.
 
-- [ ] **Aşama 5 — Sayfa tasarımları**
+- [ ] **Aşama 5 — Sayfa tasarımları** (ilk sürüm hazır: 18.10.2026; panel sonrası
+  gözden geçirme ve iyileştirme yapılacak)
   - 5a: Ana sayfa (hero, öne çıkan projeler, hizmetler özeti, güven göstergeleri,
     iletişime çağrı)
   - 5b: Projeler listesi (durum filtresi) + proje detay (galeri, özellikler)
@@ -117,7 +123,11 @@ kullanıcı onayıyla geçilir.
   - ✅ Kontrol: Her alt aşamada telefon (360px), tablet ve masaüstünde kontrol.
 
 - [ ] **Aşama 6 — SEO, performans ve erişilebilirlik**
-  - Başlık/açıklama, Open Graph, `sitemap.xml`, `robots.txt`, favicon, 404
+  - Başlık/açıklama, Open Graph, `sitemap.xml`, `robots.txt`, 404
+  - **Yayın öncesi örnek içerik temizliği:** tüm kurgu metinler, rakamlar
+    (ör. "40+ proje"), iletişim bilgileri (`info@example.com`), sosyal medya
+    bağlantıları ve temsili görseller gerçekleriyle değiştirilir; `isPlaceholder`
+    işaretli proje kalmaz
   - ✅ Kontrol: Lighthouse (mobil) Performance, Accessibility, SEO ≥ 90;
     `npm run build` hatasız.
 

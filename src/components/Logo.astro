@@ -1,5 +1,21 @@
 ---
+// Logo tek bu bileşende. Yeni logo: src/assets/brand/ içindeki dosyaları değiştir.
+import { Image } from 'astro:assets';
+import markColor from '@/assets/brand/logo-mark.png';
+import markWhite from '@/assets/brand/logo-mark-white.png';
 import { t } from '@/i18n/tr';
+
+interface Props {
+  variant?: 'color' | 'white';
+}
+
+const { variant = 'color' } = Astro.props;
+const isWhite = variant === 'white';
 ---
 
-<a href="/" class="text-lg font-bold tracking-tight">{t.site.name}</a>
+<a href="/" class="inline-flex items-center gap-2.5" aria-label={`${t.site.name} — ${t.nav.home}`}>
+  <Image src={isWhite ? markWhite : markColor} alt="" height={40} class="h-10 w-auto" loading="eager" />
+  <span class:list={['text-lg font-extrabold tracking-tight', isWhite ? 'text-white' : 'text-ink']}>
+    ESC <span class:list={['font-semibold', isWhite ? 'text-brand-200' : 'text-brand-700']}>İnşaat</span>
+  </span>
+</a>

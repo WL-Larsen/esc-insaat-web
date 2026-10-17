@@ -1,0 +1,37 @@
+intro:
+  title: Sağlam temeller, güvenilir ilişkiler
+  text: ESC İnşaat; konut projeleri, arsa geliştirme ve tadilat alanlarında hizmet veren, kaliteyi ve müşteri memnuniyetini her şeyin önünde tutan bir yapı firmasıdır.
+story: |
+  Kuruluşumuzdan bu yana küçük ölçekli konut projelerinden başlayarak, bugün farklı şehirlerde konut ve ticari yapılar üreten bir ekip haline geldik.
+
+  Her projede aynı ilkeyle hareket ediyoruz: söz verdiğimiz kaliteyi, söz verdiğimiz zamanda teslim etmek. Müşterilerimizle kurduğumuz uzun soluklu ilişkiler, bu ilkenin en önemli göstergesi.
+
+  Mimari tasarımdan uygulamaya, satış sonrası destekten tadilat hizmetlerine kadar sürecin tamamını tek elden yönetiyoruz.
+vision: Yaşadığı şehre değer katan, güvenilirliği ve kalitesiyle tercih edilen bölgesel bir yapı markası olmak.
+mission: Planlamadan teslimata kadar şeffaf, sürdürülebilir ve kaliteli yapı çözümleri sunarak müşterilerimize güvenle yaşayacakları alanlar kazandırmak.
+values:
+  - title: Güven
+    text: Verdiğimiz her sözün arkasında dururuz.
+    icon: handshake
+  - title: Kalite
+    text: Malzemeden işçiliğe her detayı denetleriz.
+    icon: shield
+  - title: Şeffaflık
+    text: Süreci açık, anlaşılır ve ölçülebilir yürütürüz.
+    icon: check
+  - title: Zamanında teslim
+    text: Planlı çalışır, takvime sadık kalırız.
+    icon: clock
+timeline:
+  - year: '2009'
+    title: Kuruluş
+    text: İlk konut projemizle yolculuğumuza başladık.
+  - year: '2014'
+    title: Büyüme
+    text: Ticari yapılar ve tadilat hizmetlerini faaliyetlerimize ekledik.
+  - year: '2019'
+    title: Kentsel dönüşüm
+    text: Kentsel dönüşüm projelerinde ilk teslimlerimizi gerçekleştirdik.
+  - year: '2024'
+    title: Yeni bölgeler
+    text: Farklı şehirlerde yeni konut ve arsa projelerine başladık.

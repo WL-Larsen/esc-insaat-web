@@ -1,9 +1,90 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PagePlaceholder from '@/components/PagePlaceholder.astro';
+import Container from '@/components/Container.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import Icon from '@/components/Icon.astro';
+import { getAboutContent, getHomeContent } from '@/lib/data';
+import { toParagraphs } from '@/lib/text';
 import { t } from '@/i18n/tr';
+
+const [about, home] = await Promise.all([getAboutContent(), getHomeContent()]);
+const a = t.pages.about;
 ---
 
-<BaseLayout title={t.pages.about.title}>
-  <PagePlaceholder title={t.pages.about.title} />
+<BaseLayout title={a.title} description={about.intro.text}>
+  <PageHeader eyebrow={a.eyebrow} title={about.intro.title} description={about.intro.text} />
+
+  <!-- Hikaye + rakamlar -->
+  <section class="py-16 md:py-24">
+    <Container class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-700">{a.story}</h2>
+        <div class="mt-4 space-y-4 text-lg leading-relaxed text-muted">
+          {toParagraphs(about.story).map((para) => <p>{para}</p>)}
+        </div>
+      </div>
+      <dl class="grid grid-cols-2 gap-4 self-start">
+        {home.stats.map((stat) => (
+          <div class="flex flex-col-reverse rounded-card bg-surface p-6">
+            <dt class="mt-1 text-sm text-muted">{stat.label}</dt>
+            <dd class="text-3xl font-extrabold tracking-tight text-brand-700">{stat.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </section>
+
+  <!-- Vizyon / misyon -->
+  <section class="bg-surface py-16 md:py-20">
+    <Container class="grid gap-6 md:grid-cols-2">
+      {[
+        { title: a.vision, text: about.vision },
+        { title: a.mission, text: about.mission },
+      ].map((item) => (
+        <div class="rounded-card border border-line bg-white p-8">
+          <h2 class="text-xl font-bold text-brand-700">{item.title}</h2>
+          <p class="mt-3 text-lg leading-relaxed">{item.text}</p>
+        </div>
+      ))}
+    </Container>
+  </section>
+
+  <!-- Değerler -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeading eyebrow={a.valuesEyebrow} title={a.valuesTitle} />
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {about.values.map((value) => (
+          <li class="rounded-card border border-line p-6">
+            <span class="inline-flex size-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+              <Icon name={value.icon} />
+            </span>
+            <h3 class="mt-5 text-lg font-bold">{value.title}</h3>
+            <p class="mt-2 text-sm text-muted">{value.text}</p>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <!-- Zaman çizelgesi -->
+  <section class="bg-navy-900 py-16 md:py-24">
+    <Container>
+      <SectionHeading eyebrow={a.timelineEyebrow} title={a.timelineTitle} tone="dark" />
+      <ol class="mt-12 grid gap-8 border-l border-white/15 pl-6 md:grid-cols-4 md:border-l-0 md:border-t md:pl-0 md:pt-8">
+        {about.timeline.map((item) => (
+          <li class="relative">
+            <span class="absolute -left-[1.84rem] top-1.5 size-3 rounded-full bg-brand-500 ring-4 ring-navy-900 md:-top-[2.4rem] md:left-0" aria-hidden="true"></span>
+            <p class="text-2xl font-extrabold text-brand-400">{item.year}</p>
+            <h3 class="mt-1 text-lg font-bold text-white">{item.title}</h3>
+            <p class="mt-2 text-sm text-white/70">{item.text}</p>
+          </li>
+        ))}
+      </ol>
+    </Container>
+  </section>
+
+  <CtaBand title={home.cta.title} text={home.cta.text} />
 </BaseLayout>

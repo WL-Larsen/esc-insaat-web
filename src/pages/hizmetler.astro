@@ -1,9 +1,76 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PagePlaceholder from '@/components/PagePlaceholder.astro';
+import Container from '@/components/Container.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import Icon from '@/components/Icon.astro';
+import { getHomeContent, getServices } from '@/lib/data';
+import { toParagraphs } from '@/lib/text';
 import { t } from '@/i18n/tr';
+
+const [services, home] = await Promise.all([getServices(), getHomeContent()]);
+const s = t.pages.services;
 ---
 
-<BaseLayout title={t.pages.services.title}>
-  <PagePlaceholder title={t.pages.services.title} />
+<BaseLayout title={s.title} description={s.description}>
+  <PageHeader eyebrow={s.eyebrow} title={s.title} description={s.description}>
+    <ul class="mt-8 flex flex-wrap gap-2">
+      {services.map((service) => (
+        <li>
+          <a href={`#${service.slug}`} class="inline-flex min-h-10 items-center rounded-full border border-white/20 px-4 text-sm font-medium text-white hover:bg-white/10">
+            {service.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </PageHeader>
+
+  <section class="py-12 md:py-20">
+    <Container class="space-y-6 md:space-y-8">
+      {services.map((service, i) => (
+        <article id={service.slug} class="scroll-mt-24 grid gap-8 rounded-2xl border border-line p-6 md:grid-cols-5 md:p-10">
+          <div class="md:col-span-2">
+            <span class="inline-flex size-14 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+              <Icon name={service.icon} class="size-7" />
+            </span>
+            <p class="mt-5 text-sm font-semibold text-brand-700">{String(i + 1).padStart(2, '0')}</p>
+            <h2 class="mt-1 text-2xl font-extrabold tracking-tight">{service.title}</h2>
+            <p class="mt-3 text-muted">{service.summary}</p>
+          </div>
+          <div class="md:col-span-3">
+            <div class="space-y-4 leading-relaxed text-muted">
+              {toParagraphs(service.description).map((para) => <p>{para}</p>)}
+            </div>
+            {service.features.length > 0 && (
+              <ul class="mt-6 space-y-3">
+                {service.features.map((f) => (
+                  <li class="flex items-start gap-3 text-sm font-medium">
+                    <Icon name="check" class="size-5 shrink-0 text-brand-700" />{f}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </article>
+      ))}
+    </Container>
+  </section>
+
+  <section class="bg-surface py-16 md:py-24">
+    <Container>
+      <SectionHeading eyebrow={t.home.processEyebrow} title={t.home.processTitle} align="center" />
+      <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {home.process.map((step, i) => (
+          <li>
+            <span class="text-5xl font-extrabold text-brand-200">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-2 text-lg font-bold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </Container>
+  </section>
+
+  <CtaBand title={home.cta.title} text={home.cta.text} />
 </BaseLayout>

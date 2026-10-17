@@ -1,0 +1,21 @@
+---
+// İç sayfaların üst bandı.
+import Container from './Container.astro';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+}
+
+const { eyebrow, title, description } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-navy-900">
+  <div class="pattern-grid absolute inset-0 opacity-40" aria-hidden="true"></div>
+  <Container class="relative py-14 md:py-20">
+    <SectionHeading as="h1" tone="dark" eyebrow={eyebrow} title={title} description={description} />
+    <slot />
+  </Container>
+</section>

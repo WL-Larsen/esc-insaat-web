@@ -1,9 +1,70 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PagePlaceholder from '@/components/PagePlaceholder.astro';
+import Container from '@/components/Container.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import { PROJECT_STATUSES } from '@/config/content';
+import { getHomeContent, getProjects } from '@/lib/data';
 import { t } from '@/i18n/tr';
+
+const [projects, home] = await Promise.all([getProjects(), getHomeContent()]);
+const filters = [
+  { value: 'all', label: t.pages.projects.filterAll, count: projects.length },
+  ...PROJECT_STATUSES.map((s) => ({
+    value: s,
+    label: t.status[s],
+    count: projects.filter((p) => p.status === s).length,
+  })),
+];
 ---
 
-<BaseLayout title={t.pages.projects.title}>
-  <PagePlaceholder title={t.pages.projects.title} />
+<BaseLayout title={t.pages.projects.title} description={t.pages.projects.description}>
+  <PageHeader eyebrow={t.pages.projects.eyebrow} title={t.pages.projects.title} description={t.pages.projects.description} />
+
+  <section class="py-12 md:py-16">
+    <Container>
+      <div role="group" aria-label={t.pages.projects.filterLabel} class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+        {filters.map((f, i) => (
+          <button
+            type="button"
+            data-filter={f.value}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-line bg-white px-5 text-sm font-semibold text-muted transition-colors hover:border-brand-700 hover:text-brand-700 aria-pressed:border-brand-700 aria-pressed:bg-brand-700 aria-pressed:text-white"
+          >
+            {f.label}
+            <span class="text-xs opacity-70">{f.count}</span>
+          </button>
+        ))}
+      </div>
+
+      <div id="project-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+      <p id="project-empty" class="mt-8 text-muted" hidden>{t.pages.projects.empty}</p>
+    </Container>
+  </section>
+
+  <div class="bg-surface">
+    <CtaBand title={home.cta.title} text={home.cta.text} />
+  </div>
 </BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('#project-grid [data-status]');
+  const empty = document.getElementById('project-empty');
+
+  const apply = (value: string) => {
+    let visible = 0;
+    cards.forEach((card) => {
+      const show = value === 'all' || card.dataset.status === value;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === value)));
+    if (empty) empty.hidden = visible > 0;
+  };
+
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter ?? 'all')));
+</script>

@@ -1,9 +1,127 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PagePlaceholder from '@/components/PagePlaceholder.astro';
+import Container from '@/components/Container.astro';
+import Button from '@/components/Button.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import Icon from '@/components/Icon.astro';
+import { getFeaturedProjects, getHomeContent, getServices } from '@/lib/data';
 import { t } from '@/i18n/tr';
+
+const [home, services, projects] = await Promise.all([getHomeContent(), getServices(), getFeaturedProjects(3)]);
 ---
 
 <BaseLayout title={t.pages.home.title}>
-  <PagePlaceholder title={t.site.name} />
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-navy-900">
+    <div class="pattern-grid absolute inset-0" aria-hidden="true"></div>
+    <div
+      class="absolute -right-32 -top-32 size-[28rem] rounded-full bg-brand-500/25 blur-3xl md:-right-10"
+      aria-hidden="true"
+    >
+    </div>
+    <Container class="relative py-20 md:py-32">
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-200">{home.hero.eyebrow}</p>
+      <h1 class="mt-4 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
+        {home.hero.title}
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-white/75">{home.hero.subtitle}</p>
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <Button href="/projeler" variant="light">
+          {t.common.viewProjects}
+          <Icon name="arrowRight" class="size-4" />
+        </Button>
+        <Button href="/iletisim" variant="outlineLight">{t.nav.cta}</Button>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Rakamlar -->
+  <section aria-label={t.home.statsTitle} class="border-b border-line bg-white">
+    <Container>
+      <dl class="grid grid-cols-2 divide-line md:grid-cols-4 md:divide-x">
+        {home.stats.map((stat) => (
+          <div class="flex flex-col-reverse px-2 py-8 text-center md:py-10">
+            <dt class="mt-1 text-sm text-muted">{stat.label}</dt>
+            <dd class="text-3xl font-extrabold tracking-tight text-brand-700 md:text-4xl">{stat.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </section>
+
+  <!-- Hizmetler -->
+  <section class="bg-surface py-16 md:py-24">
+    <Container>
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <SectionHeading eyebrow={t.home.servicesEyebrow} title={t.home.servicesTitle} />
+        <a href="/hizmetler" class="inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:underline">
+          {t.common.viewAll}<Icon name="arrowRight" class="size-4" />
+        </a>
+      </div>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {services.map((service) => (
+          <li class="rounded-card border border-line bg-white p-6">
+            <span class="inline-flex size-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+              <Icon name={service.icon} />
+            </span>
+            <h3 class="mt-5 text-lg font-bold">{service.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{service.summary}</p>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <!-- Öne çıkan projeler -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <SectionHeading eyebrow={t.home.projectsEyebrow} title={t.home.projectsTitle} />
+        <a href="/projeler" class="inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:underline">
+          {t.common.viewAll}<Icon name="arrowRight" class="size-4" />
+        </a>
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Neden biz -->
+  <section class="bg-navy-900 py-16 md:py-24">
+    <Container>
+      <SectionHeading eyebrow={t.home.whyEyebrow} title={t.home.whyTitle} tone="dark" />
+      <ul class="mt-10 grid gap-px overflow-hidden rounded-card bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+        {home.whyUs.map((item) => (
+          <li class="bg-navy-900 p-6 md:p-8">
+            <Icon name={item.icon} class="size-8 text-brand-400" />
+            <h3 class="mt-5 text-lg font-bold text-white">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/70">{item.text}</p>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <!-- Süreç -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeading eyebrow={t.home.processEyebrow} title={t.home.processTitle} align="center" />
+      <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {home.process.map((step, i) => (
+          <li class="relative">
+            <span class="text-5xl font-extrabold text-brand-100">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-2 text-lg font-bold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </Container>
+  </section>
+
+  <div class="bg-surface">
+    <CtaBand title={home.cta.title} text={home.cta.text} />
+  </div>
 </BaseLayout>

@@ -1,0 +1,35 @@
+---
+// Proje görseli + temsili görsel etiketi. Kart, detay ve galeri bu bileşeni kullanır.
+import { Image } from 'astro:assets';
+import type { ImageAsset } from '@/lib/data';
+import { t } from '@/i18n/tr';
+
+interface Props {
+  src: ImageAsset;
+  alt: string;
+  isPlaceholder?: boolean;
+  widths?: number[];
+  sizes?: string;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  src,
+  alt,
+  isPlaceholder = false,
+  widths = [400, 800, 1200],
+  sizes = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
+  class: className = 'aspect-[3/2]',
+  loading = 'lazy',
+} = Astro.props;
+---
+
+<div class:list={['relative overflow-hidden bg-surface', className]}>
+  <Image src={src} alt={alt} widths={widths} sizes={sizes} loading={loading} class="size-full object-cover" />
+  {isPlaceholder && (
+    <span class="absolute bottom-3 left-3 rounded-md bg-navy-950/75 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
+      {t.common.placeholderImage}
+    </span>
+  )}
+</div>

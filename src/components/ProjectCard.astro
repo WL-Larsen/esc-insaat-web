@@ -1,0 +1,36 @@
+---
+import ProjectImage from './ProjectImage.astro';
+import StatusBadge from './StatusBadge.astro';
+import Icon from './Icon.astro';
+import type { Project } from '@/lib/data';
+import { t } from '@/i18n/tr';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article
+  class="group relative flex flex-col overflow-hidden rounded-card border border-line bg-white transition-shadow hover:shadow-lg"
+  data-status={project.status}
+>
+  <ProjectImage src={project.coverImage} alt={project.title} isPlaceholder={project.isPlaceholder} />
+  <div class="flex flex-1 flex-col p-5">
+    <div class="flex flex-wrap items-center gap-2">
+      <StatusBadge status={project.status} />
+      <span class="text-xs font-medium text-muted">{t.category[project.category]} · {project.year}</span>
+    </div>
+    <h3 class="mt-3 text-lg font-bold text-ink">
+      <a href={`/projeler/${project.slug}`} class="after:absolute after:inset-0 group-hover:text-brand-700">
+        {project.title}
+      </a>
+    </h3>
+    <p class="mt-1 flex items-center gap-1 text-sm text-muted">
+      <Icon name="pin" class="size-4 shrink-0" />
+      {project.location}
+    </p>
+    <p class="mt-3 line-clamp-2 text-sm text-muted">{project.summary}</p>
+  </div>
+</article>

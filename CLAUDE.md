@@ -22,9 +22,9 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - `src/pages/` — rotalar (Türkçe URL'ler: /hakkimizda, /projeler, /hizmetler, /iletisim)
 - `src/layouts/`, `src/components/` — arayüz
 - `src/content/` — panelin yazdığı içerik dosyaları (elle düzenlemeden önce sor)
-- `src/assets/` — panelden yüklenen ve optimize edilen görseller
+- `src/assets/` — görseller: `brand/` (logo), `placeholders/` (temsili), panel yüklemeleri
 - `src/lib/data/` — **veri erişim katmanı** (tek veri kaynağı arayüzü)
-- `src/config/` — kategori, durum gibi sabit listeler (tek tanım noktası)
+- `src/config/` — `content.ts` (kategori, durum, ikon listeleri), `navigation.ts` (menü)
 - `src/i18n/` — arayüz metinleri (`tr.ts`)
 - `src/styles/global.css` — marka tokenları (renk, font, radius)
 - `keystatic.config.ts` — panel şeması
@@ -45,9 +45,12 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 6. **Görsel kalite müşteri sitesine ayrılır.** Panel Keystatic'in varsayılan arayüzüyle
    sade kalır; panele özel tasarım/özelleştirme yapılmaz.
 7. **Temsili görseller** gerçek proje izlenimi vermez; nötr/soyut olur ve
-   "Temsili görsel" etiketi taşır (`isPlaceholder` alanı).
-8. Görseller her zaman Astro `<Image>` / `<Picture>` ile kullanılır.
-9. Erişilebilirlik: anlamlı `alt` metinleri, klavye ile gezinme, yeterli kontrast.
+   "Temsili görsel" etiketi taşır (`isPlaceholder` alanı). Örnek içerik kurgudur;
+   gerçek firma/proje/kişi adı kullanılmaz, iletişim bilgileri geçersiz tutulur.
+8. Görsel kontrol: headless Edge en az 504px genişlik açar; 390px mobil görünüm için
+   sayfa 390px'lik bir iframe içinde görüntülenir.
+9. Görseller her zaman Astro `<Image>` / `<Picture>` ile kullanılır.
+10. Erişilebilirlik: anlamlı `alt` metinleri, klavye ile gezinme, yeterli kontrast.
 
 ## Çalışma kuralları
 - Kullanıcıya **Türkçe** yanıt ver. Kod, değişken ve dosya adları İngilizce;
