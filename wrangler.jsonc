@@ -1,0 +1,10 @@
+// Cloudflare Workers ayarı: site statik dosyalardan (dist/) yayınlanır, sunucu kodu yok.
+// "name", Cloudflare panelindeki Worker adıyla aynı olmalı.
+{
+  "name": "esc-insaat-web",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
