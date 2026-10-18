@@ -116,14 +116,13 @@ kullanıcı onayıyla geçilir.
   - ✅ Kontrol: Panelden proje ekle, fotoğraf yükle, düzenle, sil → değişiklik
     sitede görünür.
 
-- [ ] **Aşama 5 — Sayfa tasarımları** (ilk sürüm hazır: 18.10.2026; panel sonrası
-  gözden geçirme ve iyileştirme yapılacak)
+- [x] **Aşama 5 — Sayfa tasarımları** (tamamlandı: 18.10.2026)
   - [x] Otomatik fotoğraf küçültme (yerel): panel yüklemesi → en uzun kenar 2000 px,
     EXIF/GPS silinir (`scripts/optimize-images.mjs`, `npm run images`)
-  - [x] Galeri görüntüleyici (ok, klavye, mobilde kaydırma)
+  - [x] Proje sayfası slayt galerisi (yan oklar, önizlemeler) + tam ekran görüntüleyici
   - [x] Projeler: durum + kategori filtresi
   - [x] Mobil sabit iletişim çubuğu (Ara / E-posta)
-  - [ ] Kullanıcı geri bildirimiyle son düzenlemeler
+  - [x] Kullanıcı geri bildirimiyle düzenlemeler (ok taşması, tıklamadan geçiş, PNG küçültme)
   - 5a: Ana sayfa (hero, öne çıkan projeler, hizmetler özeti, güven göstergeleri,
     iletişime çağrı)
   - 5b: Projeler listesi (durum filtresi) + proje detay (galeri, özellikler)
