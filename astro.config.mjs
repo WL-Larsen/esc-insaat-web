@@ -74,6 +74,9 @@ function optimizeUploads() {
 export default defineConfig({
   devToolbar: { enabled: false },
   integrations: isDev ? [react(), keystatic(), optimizeUploads()] : [],
+  // Panele kısa yol: /admin → /keystatic (Keystatic'in adresi pakette sabit, değiştirilemiyor).
+  // Panel canlıya alınınca (Faz B) üretimde de etkinleştirilecek.
+  redirects: isDev ? { '/admin': '/keystatic' } : {},
   i18n: {
     defaultLocale: 'tr',
     locales: ['tr'],
