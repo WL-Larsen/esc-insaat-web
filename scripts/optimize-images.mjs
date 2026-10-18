@@ -30,12 +30,16 @@ export async function optimizeImage(file) {
   let pipeline = sharp(input)
     .rotate()
     .resize({ width: MAX_SIDE, height: MAX_SIDE, fit: 'inside', withoutEnlargement: true });
-  if (ext === '.png') pipeline = pipeline.png({ compressionLevel: 9 });
+  // PNG fotoğraflar kayıpsız sıkıştırmayla küçülmez; ağır olanlar renk paletine indirilir
+  // (dosya adı/uzantı aynı kalır, YAML yolları bozulmaz).
+  if (ext === '.png') pipeline = tooHeavy ? pipeline.png({ palette: true, quality: 90, effort: 10, dither: 1 }) : pipeline.png({ compressionLevel: 9 });
   else if (ext === '.webp') pipeline = pipeline.webp({ quality: 80 });
   else pipeline = pipeline.jpeg({ quality: 80, mozjpeg: true });
 
   const output = await pipeline.toBuffer(); // sharp gömülü bilgileri varsayılan olarak yazmaz
-  if (output.length >= input.length && !tooLarge && !hasEmbeddedData) return null;
+  if (output.length >= input.length && !tooLarge && !hasEmbeddedData) {
+    return { file, before: input.length, after: input.length, skipped: true };
+  }
 
   await fs.writeFile(file, output);
   const outMeta = await sharp(output).metadata();
@@ -43,7 +47,11 @@ export async function optimizeImage(file) {
 }
 
 const kb = (n) => `${Math.round(n / 1024)} KB`;
-export const describe = (r) => `${path.basename(path.dirname(r.file))}/${path.basename(r.file)}: ${kb(r.before)} → ${kb(r.after)} (${r.width}×${r.height})`;
+const name = (r) => `${path.basename(path.dirname(r.file))}/${path.basename(r.file)}`;
+export const describe = (r) =>
+  r.skipped
+    ? `${name(r)}: ${kb(r.before)} — küçültülemedi (fotoğraflar için JPG önerilir)`
+    : `${name(r)}: ${kb(r.before)} → ${kb(r.after)} (${r.width}×${r.height})`;
 
 async function* walk(dir) {
   for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
@@ -58,7 +66,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   let changed = 0;
   for await (const file of walk(path.resolve(IMAGE_DIR))) {
     const result = await optimizeImage(file);
-    if (result) {
+    if (result?.skipped) console.log('uyarı:', describe(result));
+    else if (result) {
       changed++;
       console.log('küçültüldü:', describe(result));
     }

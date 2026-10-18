@@ -13,17 +13,28 @@ const isDev = process.argv.includes('dev');
  * @returns {import('astro').AstroIntegration}
  */
 function optimizeUploads() {
+  // Vite izleyicisi yerine Node'un fs.watch'u kullanılır: Vite, ayar değişikliğiyle yeniden
+  // başladığında olayları kaçırabiliyordu. Her yeniden başlatmada izleyici kapatılıp yeniden kurulur.
+  /** @type {import('node:fs').FSWatcher | undefined} */
+  let watcher;
   return {
     name: 'optimize-uploads',
     hooks: {
-      'astro:server:setup': async ({ server, logger }) => {
+      'astro:server:done': () => {
+        watcher?.close();
+        watcher = undefined;
+      },
+      'astro:server:setup': async ({ logger }) => {
+        const fs = await import('node:fs');
+        const path = await import('node:path');
         const { optimizeImage, describe, IMAGE_DIR } = await import('./scripts/optimize-images.mjs');
+        const root = path.resolve(IMAGE_DIR);
         const justWritten = new Set();
         const inProgress = new Set();
         /** @param {string} file */
         const handle = async (file) => {
           const key = file.replace(/\\/g, '/');
-          if (!key.includes(`/${IMAGE_DIR}/`) || justWritten.has(key) || inProgress.has(key)) return;
+          if (justWritten.has(key) || inProgress.has(key) || !fs.existsSync(file)) return;
           inProgress.add(key);
           try {
             await optimizeWithRetry(file, key);
@@ -35,10 +46,11 @@ function optimizeUploads() {
         const optimizeWithRetry = async (file, key) => {
           for (const delay of [400, 1500]) {
             await new Promise((r) => setTimeout(r, delay)); // dosyanın yazılması bitsin
-            if (justWritten.has(key)) return; // kendi yazdığımız dosyanın değişiklik olayı
+            if (justWritten.has(key) || !fs.existsSync(file)) return; // kendi yazdığımız dosya / silinmiş dosya
             try {
               const result = await optimizeImage(file);
-              if (result) {
+              if (result?.skipped) logger.warn(`fotoğraf: ${describe(result)}`);
+              else if (result) {
                 justWritten.add(key);
                 setTimeout(() => justWritten.delete(key), 5000);
                 logger.info(`fotoğraf küçültüldü: ${describe(result)}`);
@@ -49,8 +61,11 @@ function optimizeUploads() {
             }
           }
         };
-        server.watcher.on('add', handle);
-        server.watcher.on('change', handle);
+        watcher?.close();
+        fs.mkdirSync(root, { recursive: true });
+        watcher = fs.watch(root, { recursive: true }, (_event, filename) => {
+          if (filename) handle(path.join(root, filename.toString()));
+        });
       },
     },
   };
