@@ -17,7 +17,7 @@ const navButton =
   id="lightbox"
   aria-label={t.lightbox.label}
   data-items={JSON.stringify(items)}
-  class="m-0 h-dvh max-h-none w-screen max-w-none bg-navy-950 p-0 backdrop:bg-navy-950 open:flex open:items-center open:justify-center"
+  class="fixed inset-0 m-0 size-full max-h-none max-w-none overflow-hidden bg-navy-950 p-0 backdrop:bg-navy-950 open:flex open:items-center open:justify-center"
 >
   <img data-lightbox-img alt="" class="max-h-[85dvh] max-w-[92vw] object-contain select-none" />
   {isPlaceholder && (
@@ -63,6 +63,8 @@ const navButton =
       }),
     );
     dialog.querySelector('[data-lightbox-close]')?.addEventListener('click', () => dialog.close());
+    // Kapanınca sayfadaki galeri son bakılan görsele geçsin
+    dialog.addEventListener('close', () => document.dispatchEvent(new CustomEvent('lightbox:close', { detail: index })));
     dialog.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => show(index - 1));
     dialog.querySelector('[data-lightbox-next]')?.addEventListener('click', () => show(index + 1));
     // Görselin dışına tıklayınca kapat

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import ProjectImage from '@/components/ProjectImage.astro';
+import ProjectGallery from '@/components/ProjectGallery.astro';
 import StatusBadge from '@/components/StatusBadge.astro';
 import Button from '@/components/Button.astro';
 import Icon from '@/components/Icon.astro';
@@ -35,7 +35,6 @@ const lightboxItems = await Promise.all(
     alt: i === 0 ? project.title : `${project.title} — ${p.gallery} ${i}`,
   })),
 );
-const zoomButton = 'block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500';
 
 const facts = [
   { label: p.location, value: project.location },
@@ -62,17 +61,7 @@ const facts = [
   </section>
 
   <Container class="py-8 md:py-12">
-    <button type="button" data-lightbox-open="0" aria-label={`${t.lightbox.open}: ${project.title}`} class:list={[zoomButton, 'rounded-card']}>
-      <ProjectImage
-        src={project.coverImage}
-        alt={project.title}
-        isPlaceholder={project.isPlaceholder}
-        widths={[640, 1024, 1600, 2200]}
-        sizes="(min-width: 1920px) 1700px, (min-width: 1440px) 1344px, 100vw"
-        class="aspect-[16/10] rounded-card md:aspect-[21/9]"
-        loading="eager"
-      />
-    </button>
+    <ProjectGallery images={images} title={project.title} isPlaceholder={project.isPlaceholder} />
 
     <div class="mt-10 grid gap-10 lg:grid-cols-3 lg:gap-12">
       <div class="lg:col-span-2">
@@ -121,19 +110,6 @@ const facts = [
         </div>
       </aside>
     </div>
-
-    {project.gallery.length > 0 && (
-      <section class="mt-14">
-        <h2 class="text-xl font-bold">{p.gallery}</h2>
-        <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {project.gallery.map((img, i) => (
-            <button type="button" data-lightbox-open={i + 1} aria-label={`${t.lightbox.open}: ${p.gallery} ${i + 1}`} class:list={[zoomButton, 'rounded-card']}>
-              <ProjectImage src={img} alt={`${project.title} — ${p.gallery} ${i + 1}`} isPlaceholder={project.isPlaceholder} class="aspect-[4/3] rounded-card transition-opacity hover:opacity-90" />
-            </button>
-          ))}
-        </div>
-      </section>
-    )}
   </Container>
 
   <Lightbox items={lightboxItems} isPlaceholder={project.isPlaceholder} />
