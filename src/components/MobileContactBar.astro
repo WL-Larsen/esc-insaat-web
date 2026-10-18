@@ -1,0 +1,26 @@
+---
+// Mobilde ekranın altında sabit hızlı iletişim çubuğu (lg ve üzeri ekranlarda gizli).
+import Icon from './Icon.astro';
+import { getSiteSettings } from '@/lib/data';
+import { t } from '@/i18n/tr';
+
+const site = await getSiteSettings();
+const tel = site.phone.replace(/[^\d+]/g, '');
+const item = 'flex min-h-14 flex-1 items-center justify-center gap-2 text-sm font-semibold';
+---
+
+<nav
+  aria-label={t.common.quickContact}
+  class="fixed inset-x-0 bottom-0 z-40 flex border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+>
+  {tel && (
+    <a href={`tel:${tel}`} class:list={[item, 'border-r border-line text-ink']}>
+      <Icon name="phone" class="size-5 text-brand-700" />{t.common.call}
+    </a>
+  )}
+  <a href={`mailto:${site.email}`} class:list={[item, 'bg-brand-700 text-white']}>
+    <Icon name="mail" class="size-5" />{t.common.email}
+  </a>
+</nav>
+<!-- Çubuğun kapladığı alan kadar boşluk: yükseklik + üst çizgi + iPhone alt güvenli alanı -->
+<div class="h-[calc(3.5rem+1px+env(safe-area-inset-bottom))] lg:hidden" aria-hidden="true"></div>

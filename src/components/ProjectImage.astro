@@ -25,11 +25,11 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={['relative overflow-hidden bg-surface', className]}>
+<span class:list={['relative block overflow-hidden bg-surface', className]}>
   <Image src={src} alt={alt} widths={widths} sizes={sizes} loading={loading} class="size-full object-cover" />
   {isPlaceholder && (
     <span class="absolute bottom-3 left-3 rounded-md bg-navy-950/75 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
       {t.common.placeholderImage}
     </span>
   )}
-</div>
+</span>

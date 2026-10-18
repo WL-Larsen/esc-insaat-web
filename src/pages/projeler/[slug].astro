@@ -6,6 +6,8 @@ import StatusBadge from '@/components/StatusBadge.astro';
 import Button from '@/components/Button.astro';
 import Icon from '@/components/Icon.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
+import Lightbox from '@/components/Lightbox.astro';
+import { getImage } from 'astro:assets';
 import { getProjects, getSiteSettings, type Project } from '@/lib/data';
 import { toParagraphs } from '@/lib/text';
 import { t } from '@/i18n/tr';
@@ -24,6 +26,16 @@ const site = await getSiteSettings();
 const related = (await getProjects()).filter((p) => p.slug !== project.slug && p.category === project.category).slice(0, 3);
 const mailto = `mailto:${site.email}?subject=${encodeURIComponent(`${t.pages.projects.inquirySubject}: ${project.title}`)}`;
 const p = t.pages.projects;
+
+// Görüntüleyici: kapak + galeri, büyük boyut
+const images = [project.coverImage, ...project.gallery];
+const lightboxItems = await Promise.all(
+  images.map(async (src, i) => ({
+    src: (await getImage({ src, width: 1800 })).src,
+    alt: i === 0 ? project.title : `${project.title} — ${p.gallery} ${i}`,
+  })),
+);
+const zoomButton = 'block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500';
 
 const facts = [
   { label: p.location, value: project.location },
@@ -50,15 +62,17 @@ const facts = [
   </section>
 
   <Container class="py-8 md:py-12">
-    <ProjectImage
-      src={project.coverImage}
-      alt={project.title}
-      isPlaceholder={project.isPlaceholder}
-      widths={[640, 1024, 1600, 2200]}
-      sizes="(min-width: 1920px) 1700px, (min-width: 1440px) 1344px, 100vw"
-      class="aspect-[16/10] rounded-card md:aspect-[21/9]"
-      loading="eager"
-    />
+    <button type="button" data-lightbox-open="0" aria-label={`${t.lightbox.open}: ${project.title}`} class:list={[zoomButton, 'rounded-card']}>
+      <ProjectImage
+        src={project.coverImage}
+        alt={project.title}
+        isPlaceholder={project.isPlaceholder}
+        widths={[640, 1024, 1600, 2200]}
+        sizes="(min-width: 1920px) 1700px, (min-width: 1440px) 1344px, 100vw"
+        class="aspect-[16/10] rounded-card md:aspect-[21/9]"
+        loading="eager"
+      />
+    </button>
 
     <div class="mt-10 grid gap-10 lg:grid-cols-3 lg:gap-12">
       <div class="lg:col-span-2">
@@ -113,12 +127,16 @@ const facts = [
         <h2 class="text-xl font-bold">{p.gallery}</h2>
         <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {project.gallery.map((img, i) => (
-            <ProjectImage src={img} alt={`${project.title} — ${p.gallery} ${i + 1}`} isPlaceholder={project.isPlaceholder} class="aspect-[4/3] rounded-card" />
+            <button type="button" data-lightbox-open={i + 1} aria-label={`${t.lightbox.open}: ${p.gallery} ${i + 1}`} class:list={[zoomButton, 'rounded-card']}>
+              <ProjectImage src={img} alt={`${project.title} — ${p.gallery} ${i + 1}`} isPlaceholder={project.isPlaceholder} class="aspect-[4/3] rounded-card transition-opacity hover:opacity-90" />
+            </button>
           ))}
         </div>
       </section>
     )}
   </Container>
+
+  <Lightbox items={lightboxItems} isPlaceholder={project.isPlaceholder} />
 
   {related.length > 0 && (
     <section class="border-t border-line bg-surface py-14 md:py-20">

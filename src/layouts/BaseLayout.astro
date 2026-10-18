@@ -2,6 +2,7 @@
 import '@/styles/global.css';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import MobileContactBar from '@/components/MobileContactBar.astro';
 import { t } from '@/i18n/tr';
 
 interface Props {
@@ -36,5 +37,6 @@ const fullTitle = title === t.pages.home.title ? t.site.name : `${title} | ${t.s
       <slot />
     </main>
     <Footer />
+    <MobileContactBar />
   </body>
 </html>

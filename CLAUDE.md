@@ -16,6 +16,7 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - `npm run dev` → site: http://localhost:4321, panel: http://localhost:4321/keystatic
 - `npm run build` → tip kontrolü (`astro check`) + üretim derlemesi (`dist/`)
 - `npm run check` → yalnızca tip kontrolü
+- `npm run images` → proje fotoğraflarını toplu küçült (geliştirmede yeni yüklemeler otomatik)
 - `npm run preview` → derlenmiş siteyi yerelde önizleme
 
 ## Klasör yapısı
@@ -29,7 +30,9 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - `src/styles/global.css` — marka tokenları (renk, font, radius)
 - `scripts/process-logo.cjs` — logo değişince: `node scripts/process-logo.cjs "<logo.png>"`
 - `.tmp/` — geçici test dosyaları, ekran görüntüleri, tarayıcı profilleri (Git'e girmez).
-  `.tmp/panel-test.mjs`: panelin uçtan uca testi (`npm run dev` açıkken `node .tmp/panel-test.mjs`)
+  `npm run dev` açıkken: `node .tmp/panel-test.mjs` (panel ekle/düzenle/sil),
+  `node .tmp/ui-test.mjs` (filtre, galeri, mobil çubuk). Testlerde viewport'u CDP
+  `Emulation.setDeviceMetricsOverride` ile ayarla (headless pencere 500px açılabiliyor).
 - `keystatic.config.ts` — panel şeması (yalnızca `astro dev` sırasında yüklenir)
 - `src/content.config.ts` — içerik koleksiyonları ve doğrulama şeması
 

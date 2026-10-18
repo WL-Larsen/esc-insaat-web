@@ -118,6 +118,12 @@ kullanıcı onayıyla geçilir.
 
 - [ ] **Aşama 5 — Sayfa tasarımları** (ilk sürüm hazır: 18.10.2026; panel sonrası
   gözden geçirme ve iyileştirme yapılacak)
+  - [x] Otomatik fotoğraf küçültme (yerel): panel yüklemesi → en uzun kenar 2000 px,
+    EXIF/GPS silinir (`scripts/optimize-images.mjs`, `npm run images`)
+  - [x] Galeri görüntüleyici (ok, klavye, mobilde kaydırma)
+  - [x] Projeler: durum + kategori filtresi
+  - [x] Mobil sabit iletişim çubuğu (Ara / E-posta)
+  - [ ] Kullanıcı geri bildirimiyle son düzenlemeler
   - 5a: Ana sayfa (hero, öne çıkan projeler, hizmetler özeti, güven göstergeleri,
     iletişime çağrı)
   - 5b: Projeler listesi (durum filtresi) + proje detay (galeri, özellikler)
@@ -156,6 +162,9 @@ kullanıcı onayıyla geçilir.
     ücretsiz plan 50 kullanıcı — ⚠️ kayıtta ödeme yöntemi istenirse onay alınır,
     istenmezse veya reddedilirse yalnızca GitHub girişiyle devam edilir)
   - Gizli anahtarlar barındırma ortam değişkenlerinde
+  - Canlıda fotoğraf küçültme: panel doğrudan GitHub'a yazdığı için yerel küçültme çalışmaz;
+    `scripts/optimize-images.mjs` bir GitHub Actions iş akışıyla push sonrası çalıştırılır
+    (⚠️ private depoda ücretsiz dakika kotası içinde; kurulum öncesi onay)
   - ✅ Kontrol: Geçici adreste site açılır; panel değişikliği yayına girer; başka
     hesapla panele girilemez.
 
@@ -210,7 +219,8 @@ Kontrol tarihi: 18.10.2026. Ücretsiz kotalar sağlayıcıya bağlıdır, kullan
 | Astro, Tailwind, Keystatic, React, TypeScript, sharp | ✅ Ücretsiz | Açık kaynak (MIT / Apache-2.0) |
 | Manrope font | ✅ Ücretsiz | OFL-1.1, ticari kullanım serbest |
 | Node.js, npm | ✅ Ücretsiz | |
-| GitHub private depo | ✅ Ücretsiz | GitHub Free; Actions/LFS kullanılmıyor |
+| GitHub private depo | ✅ Ücretsiz | GitHub Free; LFS kullanılmıyor |
+| GitHub Actions (canlıda fotoğraf küçültme, Aşama 8) | ⚠️ Ücretsiz kota | Private depoda aylık ücretsiz dakika kotası; tahmini kullanım çok düşük. Kota aşılırsa iş durur, ödeme yöntemi yoksa ücret çıkmaz — kurulum öncesi doğrulanır |
 | Cloudflare Pages | ✅ Ücretsiz | 500 derleme/ay, 20.000 dosya, 20 dk derleme süresi |
 | Cloudflare DNS, SSL/HTTPS, Email Routing | ✅ Ücretsiz | |
 | Cloudflare Turnstile | ✅ Ücretsiz | Form spam koruması |

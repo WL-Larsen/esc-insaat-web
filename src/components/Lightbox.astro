@@ -1,0 +1,84 @@
+---
+// Tam ekran görsel görüntüleyici. Tetikleyiciler: [data-lightbox-open="<index>"]
+import Icon from './Icon.astro';
+import { t } from '@/i18n/tr';
+
+interface Props {
+  items: { src: string; alt: string }[];
+  isPlaceholder?: boolean;
+}
+
+const { items, isPlaceholder = false } = Astro.props;
+const navButton =
+  'absolute top-1/2 z-10 inline-flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-navy-950/70 text-white ring-1 ring-white/20 hover:bg-navy-800 focus-visible:outline-2 focus-visible:outline-white';
+---
+
+<dialog
+  id="lightbox"
+  aria-label={t.lightbox.label}
+  data-items={JSON.stringify(items)}
+  class="m-0 h-dvh max-h-none w-screen max-w-none bg-navy-950 p-0 backdrop:bg-navy-950 open:flex open:items-center open:justify-center"
+>
+  <img data-lightbox-img alt="" class="max-h-[85dvh] max-w-[92vw] object-contain select-none" />
+  {isPlaceholder && (
+    <span class="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-md bg-white/15 px-2 py-1 text-xs font-medium text-white">
+      {t.common.placeholderImage}
+    </span>
+  )}
+  <p data-lightbox-counter class="absolute top-5 left-5 text-sm font-medium text-white/80" aria-live="polite"></p>
+  <button type="button" data-lightbox-close aria-label={t.lightbox.close} class="absolute top-3 right-3 inline-flex size-12 items-center justify-center rounded-full text-white outline-white hover:bg-white/10 focus-visible:outline-2">
+    <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" /></svg>
+  </button>
+  {items.length > 1 && (
+    <>
+      <button type="button" data-lightbox-prev aria-label={t.lightbox.prev} class:list={[navButton, 'left-3']}>
+        <Icon name="arrowLeft" />
+      </button>
+      <button type="button" data-lightbox-next aria-label={t.lightbox.next} class:list={[navButton, 'right-3']}>
+        <Icon name="arrowRight" />
+      </button>
+    </>
+  )}
+</dialog>
+
+<script>
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+  if (dialog) {
+    const items: { src: string; alt: string }[] = JSON.parse(dialog.dataset.items ?? '[]');
+    const img = dialog.querySelector<HTMLImageElement>('[data-lightbox-img]')!;
+    const counter = dialog.querySelector<HTMLElement>('[data-lightbox-counter]')!;
+    let index = 0;
+
+    const show = (i: number) => {
+      index = (i + items.length) % items.length;
+      img.src = items[index].src;
+      img.alt = items[index].alt;
+      counter.textContent = `${index + 1} / ${items.length}`;
+    };
+
+    document.querySelectorAll<HTMLElement>('[data-lightbox-open]').forEach((el) =>
+      el.addEventListener('click', () => {
+        show(Number(el.dataset.lightboxOpen));
+        dialog.showModal();
+      }),
+    );
+    dialog.querySelector('[data-lightbox-close]')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => show(index - 1));
+    dialog.querySelector('[data-lightbox-next]')?.addEventListener('click', () => show(index + 1));
+    // Görselin dışına tıklayınca kapat
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+    // Mobilde kaydırma
+    let startX = 0;
+    dialog.addEventListener('touchstart', (e) => (startX = e.touches[0].clientX), { passive: true });
+    dialog.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50 && items.length > 1) show(index + (dx < 0 ? 1 : -1));
+    });
+  }
+</script>

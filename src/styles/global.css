@@ -56,6 +56,14 @@
   }
 }
 
+/* Yatay kaydırılabilir satırlarda kaydırma çubuğunu gizler (kaydırma çalışmaya devam eder) */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Koyu zeminlerde kullanılan ince ızgara deseni */
 @utility pattern-grid {
   background-image:

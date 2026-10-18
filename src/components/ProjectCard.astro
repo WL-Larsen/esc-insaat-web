@@ -15,6 +15,7 @@ const { project } = Astro.props;
 <article
   class="group relative flex flex-col overflow-hidden rounded-card border border-line bg-white transition-shadow hover:shadow-lg"
   data-status={project.status}
+  data-category={project.category}
 >
   <ProjectImage src={project.coverImage} alt={project.title} isPlaceholder={project.isPlaceholder} />
   <div class="flex flex-1 flex-col p-5">

@@ -4,44 +4,63 @@ import Container from '@/components/Container.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
 import CtaBand from '@/components/CtaBand.astro';
-import { PROJECT_STATUSES } from '@/config/content';
+import { PROJECT_CATEGORIES, PROJECT_STATUSES } from '@/config/content';
 import { getHomeContent, getProjects } from '@/lib/data';
 import { t } from '@/i18n/tr';
 
 const [projects, home] = await Promise.all([getProjects(), getHomeContent()]);
-const filters = [
-  { value: 'all', label: t.pages.projects.filterAll, count: projects.length },
-  ...PROJECT_STATUSES.map((s) => ({
-    value: s,
-    label: t.status[s],
-    count: projects.filter((p) => p.status === s).length,
-  })),
+const p = t.pages.projects;
+
+const all = { value: 'all', label: p.filterAll, count: projects.length };
+const groups = [
+  {
+    key: 'status',
+    label: p.filterStatus,
+    options: [all, ...PROJECT_STATUSES.map((s) => ({ value: s, label: t.status[s], count: projects.filter((x) => x.status === s).length }))],
+  },
+  {
+    key: 'category',
+    label: p.filterCategory,
+    // Yalnızca en az bir projesi olan kategoriler gösterilir
+    options: [
+      all,
+      ...PROJECT_CATEGORIES.map((c) => ({ value: c, label: t.category[c], count: projects.filter((x) => x.category === c).length })).filter((o) => o.count > 0),
+    ],
+  },
 ];
 ---
 
-<BaseLayout title={t.pages.projects.title} description={t.pages.projects.description}>
-  <PageHeader eyebrow={t.pages.projects.eyebrow} title={t.pages.projects.title} description={t.pages.projects.description} />
+<BaseLayout title={p.title} description={p.description}>
+  <PageHeader eyebrow={p.eyebrow} title={p.title} description={p.description} />
 
   <section class="py-12 md:py-16">
     <Container>
-      <div role="group" aria-label={t.pages.projects.filterLabel} class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-        {filters.map((f, i) => (
-          <button
-            type="button"
-            data-filter={f.value}
-            aria-pressed={i === 0 ? 'true' : 'false'}
-            class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-line bg-white px-5 text-sm font-semibold text-muted transition-colors hover:border-brand-700 hover:text-brand-700 aria-pressed:border-brand-700 aria-pressed:bg-brand-700 aria-pressed:text-white"
-          >
-            {f.label}
-            <span class="text-xs opacity-70">{f.count}</span>
-          </button>
+      <div aria-label={p.filterLabel} class="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-10">
+        {groups.map((group) => (
+          <div role="group" aria-label={group.label} class="flex min-w-0 items-center gap-3">
+            <span class="w-16 shrink-0 text-sm font-semibold text-muted lg:w-auto">{group.label}</span>
+            <div class="no-scrollbar -mr-4 flex gap-2 overflow-x-auto pr-4 sm:mr-0 sm:pr-0">
+              {group.options.map((o, i) => (
+                <button
+                  type="button"
+                  data-filter-group={group.key}
+                  data-filter={o.value}
+                  aria-pressed={i === 0 ? 'true' : 'false'}
+                  class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-line bg-white px-4 text-sm font-semibold text-muted transition-colors hover:border-brand-700 hover:text-brand-700 aria-pressed:border-brand-700 aria-pressed:bg-brand-700 aria-pressed:text-white"
+                >
+                  {o.label}
+                  <span class="text-xs opacity-70">{o.count}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
 
       <div id="project-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>
-      <p id="project-empty" class="mt-8 text-muted" hidden>{t.pages.projects.empty}</p>
+      <p id="project-empty" class="mt-8 text-muted" hidden>{p.empty}</p>
     </Container>
   </section>
 
@@ -51,20 +70,26 @@ const filters = [
 </BaseLayout>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter-group]');
   const cards = document.querySelectorAll<HTMLElement>('#project-grid [data-status]');
   const empty = document.getElementById('project-empty');
+  const state: Record<string, string> = { status: 'all', category: 'all' };
 
-  const apply = (value: string) => {
+  const apply = () => {
     let visible = 0;
     cards.forEach((card) => {
-      const show = value === 'all' || card.dataset.status === value;
+      const show = Object.entries(state).every(([key, value]) => value === 'all' || card.dataset[key] === value);
       card.hidden = !show;
       if (show) visible++;
     });
-    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === value)));
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(state[b.dataset.filterGroup!] === b.dataset.filter)));
     if (empty) empty.hidden = visible > 0;
   };
 
-  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter ?? 'all')));
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      state[b.dataset.filterGroup!] = b.dataset.filter ?? 'all';
+      apply();
+    }),
+  );
 </script>
