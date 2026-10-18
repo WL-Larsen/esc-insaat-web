@@ -20,6 +20,9 @@ export const tr = {
     follow: 'Bizi takip edin',
     rights: 'Tüm hakları saklıdır.',
   },
+  demo: {
+    banner: 'Demo sürümü — sitedeki bilgiler ve görseller örnektir.',
+  },
   common: {
     skipToContent: 'İçeriğe geç',
     placeholderImage: 'Temsili görsel',

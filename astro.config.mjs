@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
 
 // Yönetim paneli (Keystatic) yalnızca `astro dev` sırasında açılır;
-// üretim derlemesine panel ve React girmez. (Bkz. PLAN.md Aşama 7–8)
+// üretim derlemesine panel ve React girmez. (Bkz. PLAN.md B3)
 const isDev = process.argv.includes('dev');
 
 /**

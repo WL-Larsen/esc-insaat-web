@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import MobileContactBar from '@/components/MobileContactBar.astro';
 import { t } from '@/i18n/tr';
+import { isDemo } from '@/config/site';
 
 interface Props {
   title: string;
@@ -24,6 +25,7 @@ const fullTitle = title === t.pages.home.title ? t.site.name : `${title} | ${t.s
     <meta name="theme-color" content="#0b1e3d" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {isDemo && <meta name="robots" content="noindex, nofollow" />}
   </head>
   <body class="flex min-h-dvh flex-col bg-white font-sans text-ink antialiased">
     <a
@@ -32,6 +34,11 @@ const fullTitle = title === t.pages.home.title ? t.site.name : `${title} | ${t.s
     >
       {t.common.skipToContent}
     </a>
+    {isDemo && (
+      <p role="note" class="bg-brand-50 px-4 py-2 text-center text-xs font-semibold text-brand-800 sm:text-sm">
+        {t.demo.banner}
+      </p>
+    )}
     <Header />
     <main id="main" class="flex-1">
       <slot />

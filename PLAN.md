@@ -129,18 +129,24 @@ kullanıcı onayıyla geçilir.
   - 5c: Hizmetler, Hakkımızda, İletişim (mailto, sosyal medya)
   - ✅ Kontrol: Her alt aşamada telefon (360px), tablet ve masaüstünde kontrol.
 
-- [ ] **Aşama 6 — SEO, performans ve erişilebilirlik**
-  - Başlık/açıklama, Open Graph, `sitemap.xml`, `robots.txt`, 404
-  - **Yayın öncesi örnek içerik temizliği:** tüm kurgu metinler, rakamlar
-    (ör. "40+ proje"), iletişim bilgileri (`info@example.com`), sosyal medya
-    bağlantıları ve temsili görseller gerçekleriyle değiştirilir; `isPlaceholder`
-    işaretli proje kalmaz
-  - ✅ Kontrol: Lighthouse (mobil) Performance, Accessibility, SEO ≥ 90;
-    `npm run build` hatasız.
+### Faz B — Demo, içerik ve resmi yayın
+Sıra 18.10.2026'da kullanıcı onayıyla değişti: önce örnek içerikle demo yayını ve müşteri
+sunumu, ardından gerçek içerik, SEO, domain ve resmi yayın. (Eski Aşama 6–10 aşağıda
+B1–B8'e dağıtıldı.)
 
-### Faz B — Yayın (maliyetler bu fazda değerlendirilecek)
+- [ ] **B1 — Demo yayını (Cloudflare Pages, ücretsiz `*.pages.dev`)**
+  - Kullanıcı ücretsiz Cloudflare hesabı açar (kart istenmez; istenirse durulur)
+  - GitHub deposu Cloudflare Pages'e bağlanır, erişim yalnızca `esc-insaat-web` ile sınırlı
+  - Demo modu (`src/config/site.ts` → `isDemo`): tüm sayfalarda `noindex`,
+    `robots.txt` → `Disallow: /`, üstte "Demo sürümü — içerikler örnektir" şeridi
+  - Panel yerelde kalır; değişiklikler GitHub'a gönderildikçe demo otomatik güncellenir
+  - ✅ Kontrol: Demo adresi telefonda açılır, şerit görünür, `robots.txt` kapalı,
+    sayfa kaynağında `noindex` var.
 
-- [ ] **Aşama 7 — Entegrasyon testi (yayın öncesi doğrulama)**
+- [ ] **B2 — Müşteri sunumu ve geri bildirim**
+  - Demo adresi müşteriyle paylaşılır; geri bildirimler uygulanır
+
+- [ ] **B3 — Panel canlıda (entegrasyon testi + GitHub modu)**
   - Cloudflare Pages + Keystatic GitHub modu birlikte **çalıştığı varsayılmaz**,
     önce küçük bir testle doğrulanır.
   - Ayrı test dalı veya geçici test deposuyla minimum kurulum:
@@ -152,11 +158,7 @@ kullanıcı onayıyla geçilir.
     sağlayıcısında (Netlify / Vercel, ücretsiz planlar) çalıştırılması, panelin
     yalnızca yerelde kullanılması (içerik yerelde düzenlenip push edilir),
     Keystatic Cloud (⚠️ 3 kullanıcıya kadar ücretsiz, fazlası ücretli — onay gerekir).
-  - ✅ Kontrol: Test sonuç raporu ve seçilen yöntem için kullanıcı onayı.
-
-- [ ] **Aşama 8 — Deployment**
-  - GitHub deposunu barındırmaya bağlama; `main` → otomatik yayın
-  - Keystatic GitHub modu (Aşama 7'de doğrulanan yöntemle)
+  - Test sonrası kurulum: Keystatic GitHub modu, `/admin` kısa yolu canlıda da açılır
   - Ek güvenlik: `/keystatic` önüne Cloudflare Access (yalnızca sizin e-postanız;
     ücretsiz plan 50 kullanıcı — ⚠️ kayıtta ödeme yöntemi istenirse onay alınır,
     istenmezse veya reddedilirse yalnızca GitHub girişiyle devam edilir)
@@ -164,10 +166,20 @@ kullanıcı onayıyla geçilir.
   - Canlıda fotoğraf küçültme: panel doğrudan GitHub'a yazdığı için yerel küçültme çalışmaz;
     `scripts/optimize-images.mjs` bir GitHub Actions iş akışıyla push sonrası çalıştırılır
     (⚠️ private depoda ücretsiz dakika kotası içinde; kurulum öncesi onay)
-  - ✅ Kontrol: Geçici adreste site açılır; panel değişikliği yayına girer; başka
-    hesapla panele girilemez.
+  - ✅ Kontrol: Panel değişikliği 1–3 dakikada yayına girer; başka GitHub hesabıyla
+    panele girilemez; test raporu ve kullanıcı onayı.
 
-- [ ] **Aşama 9 — Domain ve HTTPS**
+- [ ] **B4 — Gerçek içerik**
+  - Tüm kurgu metinler, rakamlar (ör. "40+ proje"), iletişim bilgileri
+    (`info@example.com`), sosyal medya bağlantıları ve temsili görseller gerçekleriyle
+    değiştirilir; `isPlaceholder` işaretli proje kalmaz
+
+- [ ] **B5 — SEO, performans ve erişilebilirlik** (eski Aşama 6)
+  - Başlık/açıklama, Open Graph paylaşım görselleri, `sitemap.xml`, yapısal veri (firma)
+  - ✅ Kontrol: Lighthouse (mobil) Performance, Accessibility, Best Practices, SEO ≥ 90;
+    `npm run build` hatasız.
+
+- [ ] **B6 — Domain ve HTTPS** (eski Aşama 9)
   - Domain seçimi ve satın alma (.com.tr / .com) — ⚠️ **projedeki tek kaçınılmaz ücret**
     (yıllık); satın alma öncesi fiyat karşılaştırması ve onay. Domain alınmazsa site
     ücretsiz `*.pages.dev` adresinde yayında kalabilir
@@ -178,11 +190,17 @@ kullanıcı onayıyla geçilir.
     önce denenir; ücretli e-posta servisi (⚠️) yalnızca onayla
   - ✅ Kontrol: `https://alanadi` açılır, sertifika geçerli, info@ e-postası ulaşır.
 
-- [ ] **Aşama 10 — İletişim kanalları**
+- [ ] **B7 — İletişim kanalları** (eski Aşama 10)
   - İletişim formu (Cloudflare fonksiyonu + Resend ücretsiz plan: ayda 3.000 / günde 100
     e-posta + Turnstile spam koruması, ücretsiz)
+  - KVKK aydınlatma metni (içerik kullanıcı/hukukçu onayıyla)
   - WhatsApp butonu (değerlendirme sonrası)
   - ✅ Kontrol: Form gönderimi e-postaya ulaşır, bot gönderimleri engellenir.
+
+- [ ] **B8 — Resmi yayın**
+  - `isDemo = false`: demo şeridi ve `noindex` kalkar, `robots.txt` açılır
+  - Google Search Console kaydı ve site haritası gönderimi (ücretsiz)
+  - ✅ Kontrol: Canlı adreste şerit yok, `robots.txt` açık, Search Console doğrulandı.
 
 ### Faz C — Genişleme (ihtiyaç doğduğunda)
 - **Çok dil (EN/RU):** içerik şemasına dil alanları, `/en`, `/ru` rotaları, `hreflang`
@@ -192,7 +210,7 @@ kullanıcı onayıyla geçilir.
 
 ## 4. Riskler ve notlar
 - **Barındırma + panel entegrasyonu doğrulanmadı.** Cloudflare Pages ile Keystatic
-  GitHub modunun sorunsuz çalışacağı varsayılmaz; Aşama 7'de test edilir.
+  GitHub modunun sorunsuz çalışacağı varsayılmaz; B3'te test edilir.
 - **Veritabanına geçiş yalnızca veri katmanını değiştirmekten ibaret olmayabilir.**
   Veri katmanı sayfaları korur, ancak geçişte muhtemelen şunlar da değişir:
   - Derleme modu: statik → sunucu taraflı (SSR) veya karma; barındırma maliyeti
@@ -219,7 +237,7 @@ Kontrol tarihi: 18.10.2026. Ücretsiz kotalar sağlayıcıya bağlıdır, kullan
 | Manrope font | ✅ Ücretsiz | OFL-1.1, ticari kullanım serbest |
 | Node.js, npm | ✅ Ücretsiz | |
 | GitHub private depo | ✅ Ücretsiz | GitHub Free; LFS kullanılmıyor |
-| GitHub Actions (canlıda fotoğraf küçültme, Aşama 8) | ⚠️ Ücretsiz kota | Private depoda aylık ücretsiz dakika kotası; tahmini kullanım çok düşük. Kota aşılırsa iş durur, ödeme yöntemi yoksa ücret çıkmaz — kurulum öncesi doğrulanır |
+| GitHub Actions (canlıda fotoğraf küçültme, B3) | ⚠️ Ücretsiz kota | Private depoda aylık ücretsiz dakika kotası; tahmini kullanım çok düşük. Kota aşılırsa iş durur, ödeme yöntemi yoksa ücret çıkmaz — kurulum öncesi doğrulanır |
 | Cloudflare Pages | ✅ Ücretsiz | 500 derleme/ay, 20.000 dosya, 20 dk derleme süresi |
 | Cloudflare DNS, SSL/HTTPS, Email Routing | ✅ Ücretsiz | |
 | Cloudflare Turnstile | ✅ Ücretsiz | Form spam koruması |
@@ -227,7 +245,7 @@ Kontrol tarihi: 18.10.2026. Ücretsiz kotalar sağlayıcıya bağlıdır, kullan
 | Cloudflare Access | ✅ Ücretsiz plan | 50 kullanıcı; ⚠️ ödeme yöntemi istenirse onay |
 | **Domain (.com.tr / .com)** | ⚠️ **Ücretli (yıllık)** | Tek kaçınılmaz ücret; alternatif: ücretsiz `*.pages.dev` |
 | Kurumsal e-posta gönderimi (info@'dan yazma) | ⚠️ Olası ücret | Yönlendirme ücretsiz; gönderme için ücretsiz yollar önce denenir |
-| Keystatic Cloud | ⚠️ 3 kullanıcıdan sonra ücretli | Yalnızca Aşama 7 başarısız olursa alternatif |
+| Keystatic Cloud | ⚠️ 3 kullanıcıdan sonra ücretli | Yalnızca B3 testi başarısız olursa alternatif |
 | Cloudflare R2 (çok fotoğraf olursa) | ⚠️ 10 GB'a kadar ücretsiz | Kurulumda ödeme yöntemi isteyebilir; aşılırsa ücretli |
 | Veritabanı (Faz C, emlak ilanları) | ⚠️ Ücretsiz katmanlar var | Cloudflare D1 vb.; kota aşılırsa ücretli |
 | Cloudflare Images, ücretli temalar/eklentiler | ❌ Kullanılmayacak | |
