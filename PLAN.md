@@ -134,9 +134,12 @@ Sıra 18.10.2026'da kullanıcı onayıyla değişti: önce örnek içerikle demo
 sunumu, ardından gerçek içerik, SEO, domain ve resmi yayın. (Eski Aşama 6–10 aşağıda
 B1–B8'e dağıtıldı.)
 
-- [ ] **B1 — Demo yayını (Cloudflare Pages, ücretsiz `*.pages.dev`)**
+- [x] **B1 — Demo yayını (Cloudflare Workers, ücretsiz `*.workers.dev`)** — 18–21.10.2026
+  - Yayında: https://esc-insaat-web.huseyin-celebi196.workers.dev/ (`wrangler.jsonc`, `.node-version`)
+  - Pages yerine Workers seçildi: Cloudflare Pages'i "legacy" saydı; Workers ücretsiz planı
+    ayda 3.000 derleme dakikası, statik dosya istekleri ücretsiz
   - Kullanıcı ücretsiz Cloudflare hesabı açar (kart istenmez; istenirse durulur)
-  - GitHub deposu Cloudflare Pages'e bağlanır, erişim yalnızca `esc-insaat-web` ile sınırlı
+  - GitHub deposu Cloudflare'e bağlanır, erişim yalnızca `esc-insaat-web` ile sınırlı
   - Demo modu (`src/config/site.ts` → `isDemo`): tüm sayfalarda `noindex`,
     `robots.txt` → `Disallow: /`, üstte "Demo sürümü — içerikler örnektir" şeridi
   - Panel yerelde kalır; değişiklikler GitHub'a gönderildikçe demo otomatik güncellenir
@@ -147,7 +150,7 @@ B1–B8'e dağıtıldı.)
   - Demo adresi müşteriyle paylaşılır; geri bildirimler uygulanır
 
 - [ ] **B3 — Panel canlıda (entegrasyon testi + GitHub modu)**
-  - Cloudflare Pages + Keystatic GitHub modu birlikte **çalıştığı varsayılmaz**,
+  - Cloudflare Workers + Keystatic GitHub modu birlikte **çalıştığı varsayılmaz**,
     önce küçük bir testle doğrulanır.
   - Ayrı test dalı veya geçici test deposuyla minimum kurulum:
     Cloudflare adaptörü, GitHub App, panel girişi, içerik kaydı → commit → otomatik
@@ -182,7 +185,7 @@ B1–B8'e dağıtıldı.)
 - [ ] **B6 — Domain ve HTTPS** (eski Aşama 9)
   - Domain seçimi ve satın alma (.com.tr / .com) — ⚠️ **projedeki tek kaçınılmaz ücret**
     (yıllık); satın alma öncesi fiyat karşılaştırması ve onay. Domain alınmazsa site
-    ücretsiz `*.pages.dev` adresinde yayında kalabilir
+    ücretsiz `*.workers.dev` adresinde yayında kalabilir
   - DNS yönetimi (Cloudflare), özel domain bağlama
   - HTTPS (otomatik sertifika), `www` ↔ kök yönlendirme, HTTP → HTTPS zorunluluğu
   - Kurumsal e-posta: Cloudflare Email Routing (ücretsiz; info@ → kişisel adrese

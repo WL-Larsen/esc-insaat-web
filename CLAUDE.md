@@ -10,7 +10,7 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 - Keystatic (dosya tabanlı yönetim paneli; şu an `local` modu)
 - Node.js 24 LTS (Astro 7 için ≥ 22.22 gerekli), npm
 - Yol takma adı: `@/` → `src/`
-- Barındırma (ileride, doğrulanacak): Cloudflare Pages
+- Barındırma: Cloudflare Workers (statik, `wrangler.jsonc`); `main`'e push → 1–3 dk'da yayında
 
 ## Komutlar
 - `npm run dev` → site: http://localhost:4321, panel: http://localhost:4321/keystatic
