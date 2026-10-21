@@ -33,7 +33,10 @@ const projectImage = (label: string, description?: string) =>
 const required = { validation: { length: { min: 1 } } };
 
 export default config({
-  storage: { kind: 'local' },
+  // Yerelde dosyalara, canlıda GitHub deposuna yazar (kayıt = commit → otomatik yayın).
+  storage: import.meta.env.PROD
+    ? { kind: 'github', repo: { owner: 'WL-Larsen', name: 'esc-insaat-web' } }
+    : { kind: 'local' },
   ui: {
     brand: { name: 'ESC İnşaat' },
     navigation: {

@@ -3,9 +3,11 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
+import cloudflare from '@astrojs/cloudflare';
 
-// Yönetim paneli (Keystatic) yalnızca `astro dev` sırasında açılır;
-// üretim derlemesine panel ve React girmez. (Bkz. PLAN.md B3)
+// Yerelde (`astro dev`) panel dosyalara yazar ve Node'da çalışır; Cloudflare adaptörü yalnızca
+// derlemede devreye girer. Canlıda site sayfaları yine statiktir, yalnızca panel (/keystatic,
+// /api/keystatic) Worker üzerinde sunucu tarafında çalışır ve GitHub'a yazar. (Bkz. PLAN.md B3)
 const isDev = process.argv.includes('dev');
 
 /**
@@ -73,10 +75,13 @@ function optimizeUploads() {
 
 export default defineConfig({
   devToolbar: { enabled: false },
-  integrations: isDev ? [react(), keystatic(), optimizeUploads()] : [],
+  integrations: isDev ? [react(), keystatic(), optimizeUploads()] : [react(), keystatic()],
+  // Görseller derlemede sharp ile küçültülür (Cloudflare Images ⚠️ kotalı, kullanılmaz);
+  // oturum deposu (KV) kullanılmadığı için kapalı.
+  adapter: isDev ? undefined : cloudflare({ imageService: 'compile', prerenderEnvironment: 'node' }),
+  session: false,
   // Panele kısa yol: /admin → /keystatic (Keystatic'in adresi pakette sabit, değiştirilemiyor).
-  // Panel canlıya alınınca (Faz B) üretimde de etkinleştirilecek.
-  redirects: isDev ? { '/admin': '/keystatic' } : {},
+  redirects: { '/admin': '/keystatic' },
   i18n: {
     defaultLocale: 'tr',
     locales: ['tr'],
