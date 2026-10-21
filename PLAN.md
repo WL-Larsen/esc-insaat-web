@@ -146,10 +146,13 @@ B1–B8'e dağıtıldı.)
   - ✅ Kontrol: Demo adresi telefonda açılır, şerit görünür, `robots.txt` kapalı,
     sayfa kaynağında `noindex` var.
 
-- [ ] **B2 — Müşteri sunumu ve geri bildirim**
+- [x] **B2 — Müşteri sunumu ve geri bildirim** — 21.10.2026 (müşteri = kullanıcı; inceledi)
   - Demo adresi müşteriyle paylaşılır; geri bildirimler uygulanır
 
 - [ ] **B3 — Panel canlıda (entegrasyon testi + GitHub modu)**
+  - 21.10.2026: `b3-panel` dalında yerel test başarılı (GitHub girişi, kayıt → commit),
+    `main`'e alındı. Kalan: Cloudflare Secret'ları, canlı panel testi, yetkisiz hesap testi.
+    Not: Workers Builds, önizlemede derlenmiş aynı commit'i `main` için yeniden derlemeyebilir.
   - Cloudflare Workers + Keystatic GitHub modu birlikte **çalıştığı varsayılmaz**,
     önce küçük bir testle doğrulanır.
   - Ayrı test dalı veya geçici test deposuyla minimum kurulum:

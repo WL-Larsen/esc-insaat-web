@@ -7,7 +7,9 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
 ## Teknoloji
 - Astro (statik site) + TypeScript
 - Tailwind CSS (v4, Vite eklentisi)
-- Keystatic (dosya tabanlı yönetim paneli; şu an `local` modu)
+- Keystatic (dosya tabanlı yönetim paneli): yerelde `local` (dosyaya yazar), canlıda `github`
+  (kayıt = `main`'e commit → otomatik yayın). GitHub App: `wl-larsen-keystatic`; anahtarlar yerelde
+  `.env`, canlıda Cloudflare Secret. Canlı panel: `<site>/admin`
 - Node.js 24 LTS (Astro 7 için ≥ 22.22 gerekli), npm
 - Yol takma adı: `@/` → `src/`
 - Barındırma: Cloudflare Workers (statik, `wrangler.jsonc`); `main`'e push → 1–3 dk'da yayında
@@ -33,7 +35,8 @@ bireysel alıcılar. Detaylı yol haritası ve aşamalar: PLAN.md
   `npm run dev` açıkken: `node .tmp/panel-test.mjs` (panel ekle/düzenle/sil),
   `node .tmp/ui-test.mjs` (filtre, galeri, mobil çubuk). Testlerde viewport'u CDP
   `Emulation.setDeviceMetricsOverride` ile ayarla (headless pencere 500px açılabiliyor).
-- `keystatic.config.ts` — panel şeması (yalnızca `astro dev` sırasında yüklenir)
+- `keystatic.config.ts` — panel şeması (`import.meta.env.PROD` → GitHub modu)
+- `wrangler.jsonc` — Cloudflare Worker ayarı; adaptör (`@astrojs/cloudflare`) yalnızca derlemede
 - `src/content.config.ts` — içerik koleksiyonları ve doğrulama şeması
 
 ## Panel ↔ şema uyumu
