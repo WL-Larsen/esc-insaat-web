@@ -149,31 +149,16 @@ B1–B8'e dağıtıldı.)
 - [x] **B2 — Müşteri sunumu ve geri bildirim** — 21.10.2026 (müşteri = kullanıcı; inceledi)
   - Demo adresi müşteriyle paylaşılır; geri bildirimler uygulanır
 
-- [ ] **B3 — Panel canlıda (entegrasyon testi + GitHub modu)**
-  - 21.10.2026: `b3-panel` dalında yerel test başarılı (GitHub girişi, kayıt → commit),
-    `main`'e alındı. Kalan: Cloudflare Secret'ları, canlı panel testi, yetkisiz hesap testi.
-    Not: Workers Builds, önizlemede derlenmiş aynı commit'i `main` için yeniden derlemeyebilir.
-  - Cloudflare Workers + Keystatic GitHub modu birlikte **çalıştığı varsayılmaz**,
-    önce küçük bir testle doğrulanır.
-  - Ayrı test dalı veya geçici test deposuyla minimum kurulum:
-    Cloudflare adaptörü, GitHub App, panel girişi, içerik kaydı → commit → otomatik
-    derleme → yayında görünme; görsel yüklemenin çalışması.
-  - Başarı ölçütleri: giriş çalışır, kayıt GitHub'a commit düşer, site 1–2 dakikada
-    güncellenir, yetkisiz hesap panele giremez.
-  - Başarısızsa değerlendirilecek alternatifler: Keystatic'in farklı barındırma
-    sağlayıcısında (Netlify / Vercel, ücretsiz planlar) çalıştırılması, panelin
-    yalnızca yerelde kullanılması (içerik yerelde düzenlenip push edilir),
-    Keystatic Cloud (⚠️ 3 kullanıcıya kadar ücretsiz, fazlası ücretli — onay gerekir).
-  - Test sonrası kurulum: Keystatic GitHub modu, `/admin` kısa yolu canlıda da açılır
-  - Ek güvenlik: `/keystatic` önüne Cloudflare Access (yalnızca sizin e-postanız;
-    ücretsiz plan 50 kullanıcı — ⚠️ kayıtta ödeme yöntemi istenirse onay alınır,
-    istenmezse veya reddedilirse yalnızca GitHub girişiyle devam edilir)
-  - Gizli anahtarlar barındırma ortam değişkenlerinde
-  - Canlıda fotoğraf küçültme: panel doğrudan GitHub'a yazdığı için yerel küçültme çalışmaz;
-    `scripts/optimize-images.mjs` bir GitHub Actions iş akışıyla push sonrası çalıştırılır
-    (⚠️ private depoda ücretsiz dakika kotası içinde; kurulum öncesi onay)
-  - ✅ Kontrol: Panel değişikliği 1–3 dakikada yayına girer; başka GitHub hesabıyla
-    panele girilemez; test raporu ve kullanıcı onayı.
+- [x] **B3 — Panel canlıda (entegrasyon testi + GitHub modu)** — 21.10.2026
+  - Canlı panel: `<site>/admin` → GitHub girişi (App: `wl-larsen-keystatic`, yalnızca bu depoya kurulu).
+    Anahtarlar Cloudflare Secret; `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` derleme değişkeni.
+  - Test (`.tmp/live-test.mjs`): kayıt → commit (WL-Larsen noreply) → derleme 11 sn'de başlar →
+    ~1 dk'da canlıda; 3,2 MB fotoğraf yüklendi, sitede webp sürümleri üretildi; anonim depo
+    erişimi/yazma ve panel API'si 401/404. Kullanıcı canlı panele GitHub ile giriş yaptı.
+  - `wrangler.jsonc` → `run_worker_first`: tarayıcı istekleri panel yerine 404 alıyordu.
+  - Not: Workers Builds bazen bir push'u kaçırıyor (derleme başlamaz) → boş commit ile tetiklenir.
+  - Ertelenenler (ihtiyaç olursa, onayla): canlı yüklemelerde fotoğraf küçültme (GitHub Actions ⚠️
+    kota) — B4'te gerçek fotoğraf boyutlarına göre karar; Cloudflare Access (ek giriş katmanı).
 
 - [ ] **B4 — Gerçek içerik**
   - Tüm kurgu metinler, rakamlar (ör. "40+ proje"), iletişim bilgileri
