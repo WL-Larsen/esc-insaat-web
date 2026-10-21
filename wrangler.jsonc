@@ -6,6 +6,9 @@
   "name": "esc-insaat-web",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Tarayıcıdan gelen sayfa isteklerinde Cloudflare 404 sayfasını Worker'a sormadan döndürür;
+    // panel adresleri bu yüzden önce Worker'a gönderilir.
+    "run_worker_first": ["/keystatic", "/keystatic/*", "/api/keystatic/*"]
   }
 }
